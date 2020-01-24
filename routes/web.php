@@ -13,7 +13,7 @@
 
 Route::group(['as' => 'auth.', 'middleware' => 'auth'], function () {
     
-    Route::get('/', ['as' => 'home', 'uses' => 'Web\NewsWebController@index']);
+    Route::view('/', 'main');
 
     Route::resource('masters', 'Web\MasterWebController');
 
