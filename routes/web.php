@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['as' => 'auth.', 'middleware' => 'auth'], function () {
+    
+    Route::get('/', ['as' => 'home', 'uses' => 'Web\NewsWebController@index']);
+
+    Route::resource('masters', 'Web\MasterWebController');
+
+    Route::resource('queries', 'Web\QueryWebController');
+
+    Route::resource('departments', 'Web\DepartmentWebController');
+    
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
