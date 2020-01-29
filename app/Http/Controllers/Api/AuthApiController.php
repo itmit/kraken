@@ -20,6 +20,7 @@ class AuthApiController extends ApiBaseController
     public $successStatus = 200;
 
     private $user;
+    private $userInfo;
 
     public function register(Request $request)
     {
@@ -29,7 +30,7 @@ class AuthApiController extends ApiBaseController
             'organization' => 'required|max:191',
             'address' => 'required|max:191',
             'phone' => 'required|max:191',
-            'password' => 'required|confirmed',
+            'password' => 'required|min:8|confirmed',
         ]);
         
         if ($validator->fails()) { 
@@ -47,7 +48,7 @@ class AuthApiController extends ApiBaseController
                 'password' => Hash::make($request->password),
             ]);
 
-            ClientInfo::create([
+            $this->userInfo = ClientInfo::create([
                 'client_id' => $this->user->id,
                 'name' => $request->name,
                 'organization' => $request->organization,
@@ -75,7 +76,7 @@ class AuthApiController extends ApiBaseController
             $token->save();
 
             return $this->sendResponse([
-                'client' => $this->user,
+                'client_info' => $this->userInfo,
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
                 'expires_at' => Carbon::parse(
@@ -95,53 +96,54 @@ class AuthApiController extends ApiBaseController
      */ 
     public function login(Request $request) { 
 
-        // $validator = Validator::make($request->all(), [ 
-        //     'email' => 'required|email',
-        //     'password' => 'required|min:6',
-        // ]);
+        $validator = Validator::make($request->all(), [ 
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
         
-        // if ($validator->fails()) { 
-        //     return response()->json(['errors'=>$validator->errors()], 401);            
-        // }
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 401);            
+        }
 
-        // if(!Client::where('email', '=', $request->email)->exists())
-        // {
-        //     return response()->json(['error'=>'Такого пользователя не существует'], 401); 
-        // }       
+        if(!Client::where('email', '=', $request->email)->exists())
+        {
+            return response()->json(['error'=>'Такого пользователя не существует'], 500); 
+        }       
 
-        // $client = Client::where('email', '=', $request->email)->first();
+        $client = Client::where('email', '=', $request->email)->first();
 
-        // if(Hash::check($request->password, $client->password))
-        // {
-        //     Auth::login($client);
-        //     if (Auth::check()) {
-        //         $tokenResult = $client->createToken(config('app.name'));
-        //         $token = $tokenResult->token;
-        //         $token->expires_at = Carbon::now()->addWeeks(1);
-        //         $token->save();
+        if(Hash::check($request->password, $client->password))
+        {
+            Auth::login($client);
+            if (Auth::check()) {
+                $tokenResult = $client->createToken(config('app.name'));
+                $token = $tokenResult->token;
+                $token->expires_at = Carbon::now()->addWeeks(1);
+                $token->save();
 
-        //         if($request->device_token)
-        //         {
-        //             Client::where('id', '=', $client->id)->update([
-        //                 'device_token' => $request->device_token
-        //             ]);
-        //         }
+                if($request->device_token)
+                {
+                    Client::where('id', '=', $client->id)->update([
+                        'device_token' => $request->device_token
+                    ]);
+                }
 
-        //         return $this->sendResponse([
-        //             'access_token' => $tokenResult->accessToken,
-        //             'token_type' => 'Bearer',
-        //             'expires_at' => Carbon::parse(
-        //                 $tokenResult->token->expires_at
-        //             )->toDateTimeString(),
-        //         ],
-        //             'Authorization is successful');
-        //     }
-        // }
-        // else
-        // {
-        //     return response()->json(['error'=>'Неверный пароль'], 401); 
-        // }
-        // return response()->json(['error'=>'Авторизация не удалась'], 401); 
+                return $this->sendResponse([
+                    'client_info' => $this->client,
+                    'access_token' => $tokenResult->accessToken,
+                    'token_type' => 'Bearer',
+                    'expires_at' => Carbon::parse(
+                        $tokenResult->token->expires_at
+                    )->toDateTimeString()
+                ],
+                    'Authorization is successful');
+            }
+        }
+        else
+        {
+            return response()->json(['error'=>'Неверный пароль'], 500); 
+        }
+        return response()->json(['error'=>'Авторизация не удалась'], 401); 
     }
     
 }
