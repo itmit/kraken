@@ -105,12 +105,13 @@ class AuthApiController extends ApiBaseController
             return response()->json(['errors'=>$validator->errors()], 401);            
         }
 
-        if(!Client::where('email', '=', $request->email)->exists())
+        if(!ClientInfo::where('email', '=', $request->email)->exists())
         {
             return response()->json(['error'=>'Такого пользователя не существует'], 500); 
         }       
 
-        $client = Client::where('email', '=', $request->email)->first();
+        $clientInfo = ClientInfo::where('email', '=', $request->email)->first();
+        $client = Client::where('id', '=', $clientInfo->id)->first();
 
         if(Hash::check($request->password, $client->password))
         {
@@ -129,7 +130,7 @@ class AuthApiController extends ApiBaseController
                 }
 
                 return $this->sendResponse([
-                    'client_info' => $this->client,
+                    'client_info' => $this->clientInfo,
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
                     'expires_at' => Carbon::parse(
