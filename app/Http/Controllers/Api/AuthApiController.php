@@ -124,13 +124,13 @@ class AuthApiController extends ApiBaseController
 
                 if($request->device_token)
                 {
-                    Client::where('id', '=', $client->id)->update([
+                    clientInfo::where('client_id', '=', $client->id)->update([
                         'device_token' => $request->device_token
                     ]);
                 }
 
                 return $this->sendResponse([
-                    'client_info' => $this->clientInfo,
+                    'client_info' => $clientInfo,
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
                     'expires_at' => Carbon::parse(
