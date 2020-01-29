@@ -30,7 +30,7 @@ class AuthApiController extends ApiBaseController
             'organization' => 'required|max:191',
             'address' => 'required|max:191',
             'phone' => 'required|max:191',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:6|confirmed',
         ]);
         
         if ($validator->fails()) { 
@@ -98,7 +98,7 @@ class AuthApiController extends ApiBaseController
 
         $validator = Validator::make($request->all(), [ 
             'email' => 'required|email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:6',
         ]);
         
         if ($validator->fails()) { 
