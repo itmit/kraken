@@ -15,7 +15,7 @@ class CreateClientInfosTable extends Migration
     {
         Schema::create('client_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('client_id');
+            $table->bigInteger('client_id')->unsigned();
             $table->string('name');
             $table->string('organization');
             $table->text('address');
