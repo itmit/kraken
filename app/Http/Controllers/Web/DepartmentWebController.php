@@ -20,7 +20,7 @@ class DepartmentWebController extends Controller
      */
     public function index()
     {
-        return view('departments.departmentsList', [
+        return view('departments.derartmentsList', [
             'title' => 'Список Отделов Исполнителей',
             'departments' => Department::all()->sortByDesc('rating')
         ]);
@@ -33,7 +33,7 @@ class DepartmentWebController extends Controller
      */
     public function create()
     {
-        return view('cases.caseCreate', [
+        return view('departments.caseCreate', [
             'title' => 'Добавить кейс'
         ]);
     }
