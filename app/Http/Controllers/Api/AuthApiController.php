@@ -29,7 +29,7 @@ class AuthApiController extends ApiBaseController
             'name' => 'required|max:191|min:2',
             'organization' => 'required|max:191',
             'address' => 'required|max:191',
-            'phone' => 'required|max:18|min:18',
+            'phone' => 'required|max:18|min:17',
             'password' => 'required|min:6|confirmed',
         ]);
         
