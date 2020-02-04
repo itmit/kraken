@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientInfosTable extends Migration
+class CreateMasterInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,21 @@ class CreateClientInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_infos', function (Blueprint $table) {
+        Schema::create('master_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('client_id')->unsigned();
+            $table->bigInteger('master_id')->unsigned();
+            $table->bigInteger('department_id')->unsigned();
             $table->string('name');
-            $table->string('organization');
-            $table->text('address');
+            $table->string('qualification');
+            $table->string('work');
             $table->string('phone');
+            $table->ingeger('rating')->default(0);
             $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('master_id')->references('id')->on('clients');
+            $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 
@@ -35,6 +38,6 @@ class CreateClientInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_infos');
+        Schema::dropIfExists('master_infos');
     }
 }

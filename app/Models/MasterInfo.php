@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ClientInfo extends Model
+class MasterInfo extends Model
 {
-    protected $table = 'client_infos';
+    use SoftDeletes;
+    
+    protected $table = 'master_infos';
 
     /**
      * @var array

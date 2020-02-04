@@ -74,7 +74,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Client::class,
             'table' => 'clients',
-        ],  
+        ],
     ],
 
     /*

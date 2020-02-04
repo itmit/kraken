@@ -15,9 +15,11 @@ Route::group(['as' => 'auth.', 'middleware' => 'auth'], function () {
     
     Route::view('/', 'main');
 
+    Route::resource('clients', 'Web\ClientWebController');
+
     Route::resource('masters', 'Web\MasterWebController');
 
-    Route::resource('queries', 'Web\QueryWebController');
+    Route::resource('inquiries', 'Web\QueryWebController');
 
     Route::resource('departments', 'Web\DepartmentWebController');
     

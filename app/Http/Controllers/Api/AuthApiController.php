@@ -29,7 +29,7 @@ class AuthApiController extends ApiBaseController
             'name' => 'required|max:191|min:2',
             'organization' => 'required|max:191',
             'address' => 'required|max:191',
-            'phone' => 'required|max:191',
+            'phone' => 'required|max:18|min:18',
             'password' => 'required|min:6|confirmed',
         ]);
         
@@ -37,7 +37,7 @@ class AuthApiController extends ApiBaseController
             return response()->json(['errors'=>$validator->errors()], 401);            
         }
 
-        if(ClientInfo::where('email', '=', $request->email)->exists())
+        if(Client::where('email', '=', $request->email)->exists())
         {
             return response()->json(['error'=>'Аккаунт с таким email-адресом уже зарегистрирован'], 500);     
         }
