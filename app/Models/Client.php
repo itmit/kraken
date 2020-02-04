@@ -51,6 +51,6 @@ class Client extends Authenticatable
 
     public function getClientInfo()
     {
-        return $this->hasOne(ClientInfo::class, 'client_id');
+        return $this->hasOne(ClientInfo::class, 'client_id')->first();
     }
 }
