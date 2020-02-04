@@ -25,7 +25,7 @@ class AuthApiController extends ApiBaseController
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
-            'email' => 'required|unique:client_infos|email|max:191',
+            'email' => 'required|unique:clients|email|max:191',
             'name' => 'required|max:191|min:2',
             'organization' => 'required|max:191',
             'address' => 'required|max:191',
