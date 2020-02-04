@@ -17,6 +17,7 @@ class CreateTypeOfWorksTable extends Migration
             $table->bigIncrements('id');
             $table->string('work'); // род работ
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

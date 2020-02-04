@@ -15,13 +15,12 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
+            $table->string('name');
             $table->uuid('uuid');
             $table->string('phone');
             $table->integer('rating')->default(0);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes();
         });
     }
 

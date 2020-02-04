@@ -22,6 +22,9 @@ class CreateMasterInfosTable extends Migration
             $table->string('work');
             $table->string('phone');
             $table->integer('rating')->default(0);
+            $table->enum('status', ['свободен', 'занят', 'офлайн'])->default('офлайн');
+            $table->float('latitude')->nullable(); // широта
+            $table->float('longitude')->nullable(); // долгота
             $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();

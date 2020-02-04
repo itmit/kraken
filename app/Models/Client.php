@@ -53,4 +53,9 @@ class Client extends Authenticatable
     {
         return $this->hasOne(ClientInfo::class, 'client_id')->first();
     }
+
+    public function getMasterInfo()
+    {
+        return $this->hasOne(MasterInfo::class, 'master_id')->first();
+    }
 }
