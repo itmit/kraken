@@ -48,4 +48,9 @@ class Client extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function getClientInfo()
+    {
+        return $this->hasOne(ClientInfo::class, 'client_id');
+    }
 }
