@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class DerartmentWebController extends Controller
+class ClientWebController extends Controller
 {
     /**
      * Display a listing of the resource.
