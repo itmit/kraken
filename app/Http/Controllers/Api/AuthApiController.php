@@ -46,6 +46,8 @@ class AuthApiController extends ApiBaseController
             $this->user = Client::create([
                 'uuid' => Str::uuid(),
                 'password' => Hash::make($request->password),
+                'email' => $request->email,
+                'type' => 'customer'
             ]);
 
             $this->userInfo = ClientInfo::create([
@@ -54,8 +56,6 @@ class AuthApiController extends ApiBaseController
                 'organization' => $request->organization,
                 'address' => $request->address,
                 'phone' => $request->phone,
-                'email' => $request->email,
-                'type' => 'customer'
             ]);
 
             if($request->device_token)
