@@ -21,7 +21,7 @@ class CreateMasterInfosTable extends Migration
             $table->string('qualification');
             $table->string('work');
             $table->string('phone');
-            $table->ingeger('rating')->default(0);
+            $table->integer('rating')->default(0);
             $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
