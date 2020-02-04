@@ -27,7 +27,7 @@ class CreateMasterInfosTable extends Migration
             $table->softDeletes();
 
             $table->foreign('master_id')->references('id')->on('clients');
-            $table->foreign('department_id')->references('id')->on('departments');
+            // $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 
