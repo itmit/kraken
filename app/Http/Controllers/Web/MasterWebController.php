@@ -57,7 +57,7 @@ class MasterWebController extends Controller
             'email' => 'required|email|unique:clients',
             'name' => 'required|min:3|max:191',
             'work' => 'required|array',
-            'phone' => 'required|min:17|max:18|unique:master_infos',
+            'phone' => 'required',
             'password' => 'required|min:6|confirmed',
             'department' => 'required'
         ]);
@@ -68,6 +68,20 @@ class MasterWebController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        // try {
+        //     //code...
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
+
+        $phone = request('phone');
+
+        $phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+        $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
+        $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
+
+        $request->phone = $phone;
 
         $master = Client::create([
             'uuid' => Str::uuid(),

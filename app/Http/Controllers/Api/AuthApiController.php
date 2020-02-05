@@ -44,13 +44,18 @@ class AuthApiController extends ApiBaseController
             return response()->json(['error'=>'Аккаунт с таким email-адресом уже зарегистрирован'], 500);     
         }
 
-        $phone = request('phone');
+        try {
+            $phone = request('phone');
 
-        $phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
-        $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
-        $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
+            $phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+            $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
+            $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
 
-        $request->phone = $phone;
+            $request->phone = $phone;
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'Не удалось преобразовать номер телефона'], 500);     
+        }
+        
 
         DB::transaction(function () use ($request) {
             $this->user = Client::create([
