@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Client;
 use App\Models\ClientInfo;
+use App\Models\MasterInfo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
