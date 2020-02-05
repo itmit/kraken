@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use libphonenumber;
 
 class DepartmentWebController extends Controller
 {
@@ -48,7 +49,7 @@ class DepartmentWebController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:191|string',
-            'phone' => 'required|min:17|max:18',
+            'phone' => 'required|min:11|max:11',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -59,6 +60,14 @@ class DepartmentWebController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        $phone = request('phone');
+
+        $phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+        $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
+        $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
+
+        $request->phone = $phone;
 
         $user = User::create([
             'name' => $request->input('name'),
