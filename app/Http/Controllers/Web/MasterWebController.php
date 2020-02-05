@@ -52,23 +52,28 @@ class MasterWebController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:191|string',
-            'phone' => 'required|min:17|max:18',
+            'email' => 'required|email|unique:clients',
+            'name' => 'required|min:13|max:191',
+            'work' => 'required|array',
+            'phone' => 'required|min:17|max:18|unique:master_infos',
+            'password' => 'required|min:6|confirm',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('auth.departments.create')
+                ->route('auth.masters.create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        Department::create([
-            'uuid' => Str::uuid(),
-            'name' => $request->input('name'),
-            'phone' => $request->input('phone'),
-            'rating' => 0,
-        ]);
+        dd($request);
+
+        // Department::create([
+        //     'uuid' => Str::uuid(),
+        //     'name' => $request->input('name'),
+        //     'phone' => $request->input('phone'),
+        //     'rating' => 0,
+        // ]);
 
         return redirect()->route('auth.departments.index');
     }
