@@ -105,13 +105,21 @@ class AuthApiController extends ApiBaseController
             return response()->json(['errors'=>$validator->errors()], 401);            
         }
 
-        if(!ClientInfo::where('email', '=', $request->email)->exists())
+        $client = Client::where('email', '=', $request->email)->first();
+
+        if(!$client)
         {
             return response()->json(['error'=>'Такого пользователя не существует'], 500); 
-        }       
-
-        $clientInfo = ClientInfo::where('email', '=', $request->email)->first();
-        $client = Client::where('id', '=', $clientInfo->id)->first();
+        }    
+        
+        if($client->type == 'customer')
+        {
+            $clientInfo = ClientInfo::where('client_id', '=', $client->id)->first();
+        }
+        if($client->type == 'master')
+        {
+            $clientInfo = MasterInfo::where('master_id', '=', $client->id)->first();
+        }
 
         if(Hash::check($request->password, $client->password))
         {
@@ -122,14 +130,14 @@ class AuthApiController extends ApiBaseController
                 $token->expires_at = Carbon::now()->addWeeks(1);
                 $token->save();
 
-                if($request->device_token)
+                
+                if($request->deviceToken)
                 {
-                    clientInfo::where('client_id', '=', $client->id)->update([
-                        'device_token' => $request->device_token
-                    ]);
+                    self::updateDeviceToken($client, $request->deviceToken);
                 }
 
                 return $this->sendResponse([
+                    'client_type' => $client->type,
                     'client_info' => $clientInfo,
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
@@ -145,6 +153,22 @@ class AuthApiController extends ApiBaseController
             return response()->json(['error'=>'Неверный пароль'], 500); 
         }
         return response()->json(['error'=>'Авторизация не удалась'], 401); 
+    }
+
+    private function updateDeviceToken($client, $deviceToken)
+    {
+        if($client->type == 'customer')
+        {
+            ClientInfo::where('client_id', '=', $client->id)->update([
+                'device_token' => $deviceToken
+            ]);
+        }
+        if($client->type == 'master')
+        {
+            MasterInfo::where('master_id', '=', $client->id)->update([
+                'device_token' => $deviceToken
+            ]);
+        }
     }
     
 }
