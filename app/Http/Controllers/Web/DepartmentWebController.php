@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use libphonenumber;
+use Illuminate\Support\Facades\Hash;
 
 class DepartmentWebController extends Controller
 {

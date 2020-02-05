@@ -8,7 +8,7 @@
             <label for="name" class="col-md-4 control-label">Наименование</label>
 
             <div class="col-md-6">
-                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
+                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required>
 
                 @if ($errors->has('name'))
                     <span class="help-block">
@@ -22,7 +22,7 @@
             <label for="phone" class="col-md-4 control-label">Телефон</label>
 
             <div class="col-md-6">
-                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
 
                 @if ($errors->has('phone'))
                     <span class="help-block">
@@ -36,7 +36,7 @@
             <label for="email" class="col-md-4 control-label">Эл. почта</label>
 
             <div class="col-md-6">
-                <input id="email" type="text" class="form-control" name="email" value="{{ old('phemailone') }}">
+                <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -50,7 +50,7 @@
             <label for="password" class="col-md-4 control-label">Пароль</label>
 
             <div class="col-md-6">
-                <input id="password" type="password" class="form-control" name="password">
+                <input id="password" type="password" class="form-control" name="password" required>
 
                 @if ($errors->has('password'))
                     <span class="help-block">
@@ -64,7 +64,7 @@
             <label for="password_confirmation" class="col-md-4 control-label">Повторите пароль</label>
 
             <div class="col-md-6">
-                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
+                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
 
                 @if ($errors->has('password_confirmation'))
                     <span class="help-block">
