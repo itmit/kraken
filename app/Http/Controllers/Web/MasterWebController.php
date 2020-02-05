@@ -66,6 +66,7 @@ class MasterWebController extends Controller
                 ->withInput();
         }
 
+        $request->work = implode(';', $request->work);
         dd($request);
 
         // Department::create([
