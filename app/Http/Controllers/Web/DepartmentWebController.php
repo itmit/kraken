@@ -33,8 +33,8 @@ class DepartmentWebController extends Controller
      */
     public function create()
     {
-        return view('departments.caseCreate', [
-            'title' => 'Добавить кейс'
+        return view('departments.departmentCreate', [
+            'title' => 'Создать отдел исполнителя'
         ]);
     }
 
@@ -46,35 +46,26 @@ class DepartmentWebController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->case_head = trim($request->case_head);
-        $request->case_body = trim($request->case_body);
-
         $validator = Validator::make($request->all(), [
-            'case_head' => 'required|min:3|max:191|string',
-            'case_body' => 'required|min:3|max:100000',
-            'case_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'name' => 'required|min:3|max:191|string',
+            'phone' => 'required|min:17|max:18',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('auth.cases.create')
+                ->route('auth.departments.create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-
-        $path = $request->file('case_picture')->store('public/newsPictures');
-        $url = Storage::url($path);
-
-        Cases::create([
+        Department::create([
             'uuid' => Str::uuid(),
-            'head' => $request->input('case_head'),
-            'body' => $request->input('case_body'),
-            'picture' => $url,
+            'name' => $request->input('name'),
+            'phone' => $request->input('phone'),
+            'rating' => 0,
         ]);
 
-        return redirect()->route('auth.cases.index');
+        return redirect()->route('auth.departments.index');
     }
 
     /**
