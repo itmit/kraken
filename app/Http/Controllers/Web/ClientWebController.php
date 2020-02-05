@@ -23,7 +23,7 @@ class ClientWebController extends Controller
     {
         return view('clients.clientList', [
             'title' => 'Заказчики',
-            'clients' => Client::all()->sortByDesc('rating')
+            'clients' => Client::where('type', 'customer')->get()
         ]);
     }
 

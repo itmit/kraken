@@ -91,6 +91,7 @@ class AuthApiController extends ApiBaseController
             $token->save();
 
             return $this->sendResponse([
+                'client_type' => $client->type,
                 'client_info' => $this->userInfo,
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
