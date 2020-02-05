@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use libphonenumber;
 
 class AuthApiController extends ApiBaseController
 {
@@ -30,7 +31,7 @@ class AuthApiController extends ApiBaseController
             'name' => 'required|max:191|min:2',
             'organization' => 'required|min:2|max:191',
             'address' => 'required',
-            'phone' => 'required|max:18|min:17',
+            'phone' => 'required',
             'password' => 'required|min:6|confirmed',
         ]);
         
@@ -42,6 +43,12 @@ class AuthApiController extends ApiBaseController
         {
             return response()->json(['error'=>'Аккаунт с таким email-адресом уже зарегистрирован'], 500);     
         }
+
+        $phone = request('phone');
+
+        $phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+        $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
+        $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
 
         DB::transaction(function () use ($request) {
             $this->user = Client::create([
@@ -56,7 +63,7 @@ class AuthApiController extends ApiBaseController
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'address' => $request->address,
-                'phone' => $request->phone,
+                'phone' => $phone,
             ]);
 
             if($request->device_token)
