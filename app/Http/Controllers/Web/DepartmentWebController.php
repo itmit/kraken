@@ -49,6 +49,8 @@ class DepartmentWebController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:191|string',
             'phone' => 'required|min:17|max:18',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +60,14 @@ class DepartmentWebController extends Controller
                 ->withInput();
         }
 
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->password)
+        ]);
+
         Department::create([
+            'department_id' => $user->id,
             'uuid' => Str::uuid(),
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),

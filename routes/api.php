@@ -20,4 +20,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('getTypeOfWork', 'Api\InquiryApiController@getTypeOfWork');
 
+    Route::post('inquiry/store', 'Api\InquiryApiController@store');
+
 });

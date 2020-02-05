@@ -18,6 +18,7 @@ class CreateInquiryDetailsTable extends Migration
             $table->string('work');
             $table->string('urgency');
             $table->text('description');
+            $table->text('address');
             $table->timestamps();
             $table->softDeletes();
         });
