@@ -22,7 +22,7 @@
             <label for="work" class="col-md-4 control-label">Специальность</label>
 
             <div class="col-md-6">
-                <select id="work" type="text" class="form-control" name="work" multiple>
+                <select id="work" type="text" class="form-control" name="work[]" multiple>
                     @foreach ($works as $item)
                         <option value="{{ $item->work }}">{{ $item->work }}</option>
                     @endforeach

@@ -53,7 +53,7 @@ class MasterWebController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
-            'name' => 'required|min:13|max:191',
+            'name' => 'required|min:3|max:191',
             'work' => 'required|array',
             'phone' => 'required|min:17|max:18|unique:master_infos',
             'password' => 'required|min:6|confirmed',
