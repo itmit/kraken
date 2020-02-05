@@ -50,6 +50,8 @@ class AuthApiController extends ApiBaseController
         $phoneNumberObject = $phoneNumberUtil->parse($phone, 'RU');
         $phone = $phoneNumberUtil->format($phoneNumberObject, \libphonenumber\PhoneNumberFormat::E164);
 
+        $request->phone = $phone;
+
         DB::transaction(function () use ($request) {
             $this->user = Client::create([
                 'uuid' => Str::uuid(),
@@ -63,7 +65,7 @@ class AuthApiController extends ApiBaseController
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'address' => $request->address,
-                'phone' => $phone,
+                'phone' => $request->phone,
             ]);
 
             if($request->device_token)
