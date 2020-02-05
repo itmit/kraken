@@ -17,14 +17,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{-- @foreach($departments as $item)
+                @foreach($departments as $item)
                     <tr>
-                        <td>{{ $clientInfo->name }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>{{ $clientInfo->phone }}</td>
-                        <td>{{ $clientInfo->organization }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->phone }}</td>
+                        <td>{{ $item->rating }}</td>
+                        <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
                 </tbody>
             </table>
         </div>
