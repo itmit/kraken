@@ -18,5 +18,6 @@ Route::post('register', 'Api\AuthApiController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
 
+    Route::get('getTypeOfWork', 'Api\InquiryApiController@getTypeOfWork');
 
 });
