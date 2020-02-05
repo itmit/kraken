@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class MasterWebController extends Controller
 {
@@ -57,6 +58,7 @@ class MasterWebController extends Controller
             'work' => 'required|array',
             'phone' => 'required|min:17|max:18|unique:master_infos',
             'password' => 'required|min:6|confirmed',
+            'department' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -66,17 +68,25 @@ class MasterWebController extends Controller
                 ->withInput();
         }
 
-        $request->work = implode(';', $request->work);
-        dd($request);
+        $master = Client::create([
+            'uuid' => Str::uuid(),
+            'email' => $request->input('email'),
+            'type' => 'master',
+            'password' => Hash::make($request->password),
+        ]);
 
-        // Department::create([
-        //     'uuid' => Str::uuid(),
-        //     'name' => $request->input('name'),
-        //     'phone' => $request->input('phone'),
-        //     'rating' => 0,
-        // ]);
+        MasterInfo::create([
+            'master_id' => $master->id,
+            'department_id' => $request->department,
+            'name' => $request->input('name'),
+            'qualification' => '0',
+            'work' => implode(';', $request->work),
+            'phone' => $request->input('phone'),
+            'rating' => 0,
+            'status' => 'офлайн',
+        ]);
 
-        return redirect()->route('auth.departments.index');
+        return redirect()->route('auth.masters.index');
     }
 
     /**

@@ -4,11 +4,29 @@
     <form class="form-horizontal" method="POST" action="{{ route('auth.masters.store') }}">
         {{ csrf_field() }}
 
+        <div class="form-group{{ $errors->has('department') ? ' has-error' : '' }}">
+            <label for="department" class="col-md-4 control-label">Отдел исполнителя</label>
+
+            <div class="col-md-6">
+                <select id="department" class="form-control" name="department" required>
+                    @foreach ($departments as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+
+                @if ($errors->has('department'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('department') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
             <label for="name" class="col-md-4 control-label">Имя</label>
 
             <div class="col-md-6">
-                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
+                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required>
 
                 @if ($errors->has('name'))
                     <span class="help-block">
@@ -22,7 +40,7 @@
             <label for="work" class="col-md-4 control-label">Специальность</label>
 
             <div class="col-md-6">
-                <select id="work" type="text" class="form-control" name="work[]" multiple>
+                <select id="work" class="form-control" name="work[]" multiple required>
                     @foreach ($works as $item)
                         <option value="{{ $item->work }}">{{ $item->work }}</option>
                     @endforeach
@@ -40,7 +58,7 @@
             <label for="phone" class="col-md-4 control-label">Телефон</label>
 
             <div class="col-md-6">
-                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
 
                 @if ($errors->has('phone'))
                     <span class="help-block">
@@ -54,7 +72,7 @@
             <label for="email" class="col-md-4 control-label">Электронная почта</label>
 
             <div class="col-md-6">
-                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -68,7 +86,7 @@
             <label for="password" class="col-md-4 control-label">Пароль</label>
 
             <div class="col-md-6">
-                <input id="password" type="password" class="form-control" name="password">
+                <input id="password" type="password" class="form-control" name="password" required>
 
                 @if ($errors->has('password'))
                     <span class="help-block">
@@ -82,7 +100,7 @@
             <label for="password_confirmation" class="col-md-4 control-label">Повторите пароль</label>
 
             <div class="col-md-6">
-                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
+                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
 
                 @if ($errors->has('password_confirmation'))
                     <span class="help-block">
