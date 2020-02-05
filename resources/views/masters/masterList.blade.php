@@ -5,7 +5,7 @@
 <div class="col-sm-12 tabs-content">
     <div class="row justify-content-center cont-m">
         <div class="col-md-12">
-            <a href="{{ route('auth.departments.create') }}" class="btn btn-light">Создать отдел</a>
+            <a href="{{ route('auth.masters.create') }}" class="btn btn-light">Создать мастера</a>
             <h2>{{ $title }}</h2>
             <table class="table policy-table">
                 <thead>
