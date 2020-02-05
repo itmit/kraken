@@ -17,7 +17,7 @@ class CreateDepartmentsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->string('name');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->integer('rating')->default(0);
             $table->timestamps();
             $table->softDeletes();
