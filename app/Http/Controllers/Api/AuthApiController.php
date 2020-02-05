@@ -35,7 +35,7 @@ class AuthApiController extends ApiBaseController
         ]);
         
         if ($validator->fails()) { 
-            return response()->json(['errors'=>$validator->errors()], 401);            
+            return response()->json(['errors'=>$validator->errors()], 400);            
         }
 
         if(Client::where('email', '=', $request->email)->exists())
