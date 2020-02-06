@@ -15,4 +15,19 @@ class Inquiry extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    public function getInquiryDetail()
+    {
+        return $this->hasOne(InquiryDetail::class, 'inquiry_id')->first();
+    }
+
+    public function getClient()
+    {
+        return $this->hasOne(ClientInfo::class, 'client_id')->first();
+    }
+
+    public function getMaster()
+    {
+        return $this->hasOne(MasterInfo::class, 'master_id')->first();
+    }
 }

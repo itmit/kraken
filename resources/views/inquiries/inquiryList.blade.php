@@ -15,23 +15,34 @@
                     <th scope="col">Срочность</th>
                     <th scope="col">Описание</th>
                     <th scope="col">Адрес</th>
-                    {{-- <th scope="col">Статус</th> --}}
+                    <th scope="col">Статус</th>
                     <th scope="col">Создана</th>
                 </tr>
                 </thead>
                 <tbody>
-                {{-- @foreach($inquiries as $item)
+                @foreach($inquiries as $item)
+                <?
+                $detail = $item->getInquiryDetail();
+                $client = $item->getClient();
+                $master = $item->getMaster();
+                ?>
                     <tr>
-                        <td>{{ $masterInfo->name }}</td>
-                        <td>{{ $masterInfo->qualification }}</td>
-                        <td>{{ $masterInfo->work }}</td>
-                        <td>{{ $masterInfo->phone }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>{{ $masterInfo->rating }}</td>
-                        <td>{{ $masterInfo->status }}</td>
+                        <td>{{ $client->name }}</td>
+                        <td>
+                            @if ($master)
+                                {{ $master->name }}
+                            @else
+                                Мастер еще не назначен
+                            @endif
+                        </td>
+                        <td>{{ $detail->work }}</td>
+                        <td>{{ $detail->urgency }}</td>
+                        <td>{{ $detail->description }}</td>
+                        <td>{{ $detail->address }}</td>
+                        <td>{{ $detail->status }}</td>
                         <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
                 </tbody>
             </table>
         </div>
