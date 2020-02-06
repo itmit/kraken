@@ -15,4 +15,6 @@ class InquiryDetail extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    protected $dates = ['expires_at'];
 }

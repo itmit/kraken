@@ -15,12 +15,17 @@ class CreateInquiryDetailsTable extends Migration
     {
         Schema::create('inquiry_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('inquiry_id')->unsigned();
             $table->string('work');
             $table->string('urgency');
             $table->text('description');
             $table->text('address');
+            $table->enum('status', ['Создан', 'Назначен исполнитель', 'На исполнении', 'Отменен']); // запрос
+            $table->dateTime('started_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 
