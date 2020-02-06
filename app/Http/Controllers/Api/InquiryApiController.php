@@ -31,7 +31,10 @@ class InquiryApiController extends ApiBaseController
     {
         $validator = Validator::make($request->all(), [ 
             'work' => 'required|string|max:191',
-            'urgency' => 'required|max:191|min:2',
+            'urgency' => [
+                'required',
+                Rule::in(['Срочно', 'Сейчас', 'Заданное время']),
+            ],
             'description' => 'required|min:2|max:191',
             'address' => 'required|string|min:2|max:191',
         ]);

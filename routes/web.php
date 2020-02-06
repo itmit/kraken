@@ -19,7 +19,7 @@ Route::group(['as' => 'auth.', 'middleware' => 'auth'], function () {
 
     Route::resource('masters', 'Web\MasterWebController');
 
-    Route::resource('inquiries', 'Web\QueryWebController');
+    Route::resource('inquiries', 'Web\InquiryWebController');
 
     Route::resource('departments', 'Web\DepartmentWebController');
     
