@@ -25,7 +25,7 @@ class MasterApiController extends ApiBaseController
 {
     public $successStatus = 200;
 
-    public function updateLocation()
+    public function updateLocation(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
             'latitude' => 'required|numeric',
@@ -37,7 +37,7 @@ class MasterApiController extends ApiBaseController
         }
 
         try {
-            DB::transaction(function () use ($request, $authClientId) {
+            DB::transaction(function () use ($request) {
                 MasterInfo::where('master_id', auth('api')->user()->id)->update([
                     'latitude' => $request->latitude,
                     'longitude' => $request->longitude,
