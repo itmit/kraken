@@ -15,4 +15,9 @@ class Department extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    public function getDepartmentEmail()
+    {
+        return $this->hasOne(User::class, 'department_id')->first('email');
+    }
 }

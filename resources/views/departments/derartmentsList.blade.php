@@ -12,15 +12,20 @@
                 <tr>
                     <th scope="col">Наименование</th>
                     <th scope="col">Телефон</th>
+                    <th scope="col">Эл. почта</th>
                     <th scope="col">Рейтинг</th>
                     <th scope="col">Зарегистрирован</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($departments as $item)
+                <?
+                $email = $item->getDepartmentEmail();
+                ?>
                     <tr>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->phone }}</td>
+                        <td>{{ $email }}</td>
                         <td>{{ $item->rating }}</td>
                         <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td>
                     </tr>
