@@ -84,17 +84,32 @@
         <div class="row">
             <div class="col-sm-3 left-menu">
 
-                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <ul class="nav navbar-nav navbar-left" style="width: 100%">
+                    <?php
+                    $admin = Auth::user()->adm;    
+                    ?>
+
+                    @if($admin == 1)
+
+                    <li name="departments" style="width: 100%"><a href="{{ route('auth.departments.index') }}">Отделы исполнителя</a></li>
+
+                    <li name="clients" style="width: 100%"><a href="{{ route('auth.clients.index') }}">Клиенты</a></li>
+
+                    @endif
+
+                    <li name="masters" style="width: 100%"><a href="{{ route('auth.masters.index') }}">Мастера</a></li>
+
+                    <li name="inquiries" style="width: 100%"><a href="{{ route('auth.inquiries.index') }}">Запросы</a></li>
+
+                </ul>
+
+                    {{-- <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
                             &nbsp;
                         </ul>
         
                         <!-- Right Side Of Navbar -->
-                        <ul class="nav navbar-nav navbar-left" style="width: 100%">
-                            <?php
-                            $admin = Auth::user()->adm;    
-                            ?>
 
                             @if($admin == 1)
         
@@ -109,7 +124,7 @@
                             <li name="inquiries" style="width: 100%"><a href="{{ route('auth.inquiries.index') }}">Запросы</a></li>
 
                         </ul>
-                    </div>
+                    </div> --}}
             </div>
             <div class="col-sm-9 tabs-content">
                 @yield('content')
