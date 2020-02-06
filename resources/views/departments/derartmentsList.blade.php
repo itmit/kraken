@@ -20,7 +20,7 @@
                 <tbody>
                 @foreach($departments as $item)
                 <?
-                $email = $item->getDepartmentEmail();
+                $email = $item->getDepartmentEmail()->email;
                 ?>
                     <tr>
                         <td>{{ $item->name }}</td>
