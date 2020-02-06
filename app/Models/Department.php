@@ -19,6 +19,6 @@ class Department extends Model
 
     public function getDepartmentEmail()
     {
-        return $this->hasOne(User::class, 'department_id')->first('email');
+        return $this->belongsTo(User::class, 'department_id')->first('email');
     }
 }
