@@ -7,6 +7,7 @@ use App\Models\ClientInfo;
 use App\Models\MasterInfo;
 use App\Models\Inquiry;
 use App\Models\InquiryDetail;
+use App\Models\InquiryFile;
 use App\Models\TypeOfWork;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,7 +29,30 @@ class InquiryApiController extends ApiBaseController
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [ 
+            'work' => 'required|string|max:191',
+            'urgency' => 'required|max:191|min:2',
+            'description' => 'required|min:2|max:191',
+            'address' => 'required|string|min:2|max:191',
+        ]);
+        
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
 
+        $authClientId = auth('api')->user()->id;
+
+        $inquiry = Inquiry::create([
+            'uuid' => Str::uuid(),
+            'client_id' => $authClientId,
+        ]);
+
+        InquiryDetail::create([
+            'work' => $request->work,
+            'urgency' => $request->urgency,
+            'description' => $request->description,
+            'address' => $request->address,
+        ]);
     }
 
     public function getTypeOfWork()

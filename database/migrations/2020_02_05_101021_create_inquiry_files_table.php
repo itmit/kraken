@@ -15,6 +15,8 @@ class CreateInquiryFilesTable extends Migration
     {
         Schema::create('inquiry_files', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('inquiry_id')->unsigned();
+            $table->string('file');
             $table->timestamps();
         });
     }
