@@ -66,6 +66,8 @@ class InquiryApiController extends ApiBaseController
             return response()->json(['error'=>'Произошла ошибка'], 500);  
         }
 
+        return $this->sendResponse([],
+            'Запрос успешно создан');
     }
 
     public function getTypeOfWork()
