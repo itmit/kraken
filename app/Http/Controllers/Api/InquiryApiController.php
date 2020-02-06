@@ -46,17 +46,26 @@ class InquiryApiController extends ApiBaseController
 
         $authClientId = auth('api')->user()->id;
 
-        $inquiry = Inquiry::create([
-            'uuid' => Str::uuid(),
-            'client_id' => $authClientId,
-        ]);
+        try {
+            DB::transaction(function () use ($request, $authClientId) {
+                $inquiry = Inquiry::create([
+                    'uuid' => Str::uuid(),
+                    'client_id' => $authClientId,
+                ]);
+        
+                InquiryDetail::create([
+                    'inquiry_id' => $inquiry->id,
+                    'work' => $request->work,
+                    'urgency' => $request->urgency,
+                    'description' => $request->description,
+                    'address' => $request->address,
+                    'status' => 'Создан',
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'Произошла ошибка'], 500);  
+        }
 
-        InquiryDetail::create([
-            'work' => $request->work,
-            'urgency' => $request->urgency,
-            'description' => $request->description,
-            'address' => $request->address,
-        ]);
     }
 
     public function getTypeOfWork()
