@@ -17,6 +17,7 @@
                     <th scope="col">Почта</th>
                     <th scope="col">Рейтинг</th>
                     <th scope="col">Статус</th>
+                    <th scope="col">Местоположение</th>
                     <th scope="col">Зарегистрирован</th>
                 </tr>
                 </thead>
@@ -33,6 +34,7 @@
                         <td>{{ $item->email }}</td>
                         <td>{{ $masterInfo->rating }}</td>
                         <td>{{ $masterInfo->status }}</td>
+                        <td>{{ $masterInfo->latitude }};{{ $masterInfo->longitude }}</td>
                         <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td>
                     </tr>
                 @endforeach

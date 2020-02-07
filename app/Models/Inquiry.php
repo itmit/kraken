@@ -23,7 +23,7 @@ class Inquiry extends Model
 
     public function getClient()
     {
-        return $this->hasOne(ClientInfo::class, 'client_id')->first();
+        return $this->hasOne(ClientInfo::class, 'client_id', 'client_id')->first();
     }
 
     public function getMaster()
