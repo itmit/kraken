@@ -104,7 +104,8 @@ class MasterWebController extends Controller
                 ]);
             });
         } catch (\Throwable $th) {
-            return redirect()->route('auth.masters.create')->withErrors($th)->withInput();
+            dd($th);
+            // return redirect()->route('auth.masters.create')->withErrors($th)->withInput();
         }
 
         
