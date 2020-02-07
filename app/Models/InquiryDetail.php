@@ -17,4 +17,9 @@ class InquiryDetail extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['expires_at'];
+
+    public function getWork()
+    {
+        return $this->hasOne(TypeOfWork::class, 'work')->first();
+    }
 }

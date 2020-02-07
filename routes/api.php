@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::post('inquiry/store', 'Api\InquiryApiController@store');
 
-    // Route::post('masters/changeStatus', 'Api\MasterApiController@store');
+    Route::post('masters/changeStatus', 'Api\MasterApiController@changeStatus');
     Route::post('masters/updateLocation', 'Api\MasterApiController@updateLocation');
 
 });

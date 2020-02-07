@@ -50,4 +50,31 @@ class MasterApiController extends ApiBaseController
         return $this->sendResponse([],
             'Координаты успешно обновлены');
     }
+
+    public function changeStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [ 
+            'status' => [
+                'required',
+                Rule::in(['free', 'offline']), // свободен или оффлайн
+            ],
+        ]);
+        
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        try {
+            DB::transaction(function () use ($request) {
+                MasterInfo::where('master_id', auth('api')->user()->id)->update([
+                    'status' => $request->status,
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'Произошла ошибка при обновлении статуса'], 500);  
+        }
+
+        return $this->sendResponse([],
+            'Статус успешно обновлен');
+    }
 }

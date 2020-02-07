@@ -70,6 +70,26 @@ class InquiryApiController extends ApiBaseController
             'Запрос успешно создан');
     }
 
+    /**
+     * получить список ближайщих подходящих запросов
+     */
+
+    public function getNearInquiryList()
+    {
+        // $master = MasterInfo::where('master_id', auth('api')->user()->id)->first();
+
+        // $works = explode(';', $master->work);
+
+        // $result = [];
+
+        // foreach ($works as $work) {
+        //     InquiryDetail::
+        // }
+
+        // return $this->sendResponse([],
+        //     'Запрос успешно создан');
+    }
+
     public function getTypeOfWork()
     {
         $list = TypeOfWork::select('id', 'work')->get()->toArray();
