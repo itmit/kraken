@@ -31,10 +31,10 @@ class InquiryApiController extends ApiBaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
-            'work' => 'required|string|max:191',
+            'work' => 'required|exists:type_of_works,id', // id роды работ полученного методом getTypeOfWork
             'urgency' => [
                 'required',
-                Rule::in(['urgent', 'now', 'scheduled']),
+                Rule::in(['urgent', 'now', 'scheduled']), // срочно, сейчас, заданное время
             ],
             'description' => 'required|min:2|max:191',
             'address' => 'required|string|min:2|max:191',
@@ -59,7 +59,7 @@ class InquiryApiController extends ApiBaseController
                     'urgency' => $request->urgency,
                     'description' => $request->description,
                     'address' => $request->address,
-                    'status' => 'Создан',
+                    'status' => 'created',
                 ]);
             });
         } catch (\Throwable $th) {
