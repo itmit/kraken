@@ -16,10 +16,10 @@ class InquiryDetail extends Model
      */
     protected $guarded = ['id'];
 
-    protected $dates = ['expires_at'];
+    protected $dates = ['started_at'];
 
     public function getWork()
     {
-        return $this->hasOne(TypeOfWork::class, 'work')->first();
+        return $this->hasOne(TypeOfWork::class, 'work', 'id')->first();
     }
 }
