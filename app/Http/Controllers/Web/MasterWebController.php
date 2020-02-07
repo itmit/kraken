@@ -83,23 +83,31 @@ class MasterWebController extends Controller
 
         $request->phone = $phone;
 
-        $master = Client::create([
-            'uuid' => Str::uuid(),
-            'email' => $request->input('email'),
-            'type' => 'master',
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $master = Client::create([
+                    'uuid' => Str::uuid(),
+                    'email' => $request->input('email'),
+                    'type' => 'master',
+                    'password' => Hash::make($request->password),
+                ]);
+        
+                MasterInfo::create([
+                    'master_id' => $master->id,
+                    'department_id' => $request->department,
+                    'name' => $request->input('name'),
+                    'qualification' => '0',
+                    'work' => implode(';', $request->work),
+                    'phone' => $request->input('phone'),
+                    'rating' => 0,
+                    'status' => 'offline',
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return redirect()->route('auth.masters.create')->withErrors($th)->withInput();
+        }
 
-        MasterInfo::create([
-            'master_id' => $master->id,
-            'department_id' => $request->department,
-            'name' => $request->input('name'),
-            'qualification' => '0',
-            'work' => implode(';', $request->work),
-            'phone' => $request->input('phone'),
-            'rating' => 0,
-            'status' => 'офлайн',
-        ]);
+        
 
         return redirect()->route('auth.masters.index');
     }

@@ -4,6 +4,12 @@
     <form class="form-horizontal" method="POST" action="{{ route('auth.masters.store') }}">
         {{ csrf_field() }}
 
+        {{-- @if ($errors->has('place'))
+        <span class="help-block">
+            <strong>{{ $errors->first('place') }}</strong>
+        </span>
+        @endif --}}
+
         <div class="form-group{{ $errors->has('department') ? ' has-error' : '' }}">
             <label for="department" class="col-md-4 control-label">Отдел исполнителя</label>
 
