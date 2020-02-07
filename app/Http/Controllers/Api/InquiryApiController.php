@@ -34,7 +34,7 @@ class InquiryApiController extends ApiBaseController
             'work' => 'required|string|max:191',
             'urgency' => [
                 'required',
-                Rule::in(['Срочно', 'Сейчас', 'Заданное время']),
+                Rule::in(['urgent', 'now', 'scheduled']),
             ],
             'description' => 'required|min:2|max:191',
             'address' => 'required|string|min:2|max:191',

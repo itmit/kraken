@@ -17,10 +17,10 @@ class CreateInquiryDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('inquiry_id')->unsigned();
             $table->string('work');
-            $table->enum('urgency', ['Срочно', 'Сейчас', 'Заданное время']);
+            $table->enum('urgency', ['urgent', 'now', 'scheduled']);
             $table->text('description');
             $table->text('address');
-            $table->enum('status', ['Создан', 'Назначен исполнитель', 'На исполнении']); // запрос
+            $table->enum('status', ['created', 'performer appointed', 'on performance']); // запрос создан, назначен исполнитель, на исполнении
             $table->dateTime('started_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
