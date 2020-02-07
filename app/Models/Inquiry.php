@@ -28,6 +28,6 @@ class Inquiry extends Model
 
     public function getMaster()
     {
-        return $this->hasOne(MasterInfo::class, 'master_id')->first();
+        return $this->hasOne(MasterInfo::class, 'master_id', 'master_id')->first();
     }
 }
