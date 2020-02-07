@@ -35,7 +35,7 @@
                                 Мастер еще не назначен
                             @endif
                         </td>
-                        <td>{{ $detail->getWork()->work }}</td>
+                        <td>{{ $detail->getWork() }}</td>
                         <td>{{ $detail->urgency }}</td>
                         <td>{{ $detail->description }}</td>
                         <td>{{ $detail->address }}</td>
