@@ -87,6 +87,7 @@ class MasterApiController extends ApiBaseController
         foreach ($inquiries as $inquiry) {
             $type = $inquiry->getInquiryDetail()->getWork()->work;
             foreach ($works as $work) {
+                return $work . ' ' . $type;
                 if($work == $type) $result[] = $inquiry;
             }
         }
