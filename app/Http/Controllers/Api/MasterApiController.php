@@ -77,4 +77,14 @@ class MasterApiController extends ApiBaseController
         return $this->sendResponse([],
             'Статус успешно обновлен');
     }
+
+    public function getInquiryList()
+    {
+        $master = MasterInfo::where('master_id', auth('api')->user()->id)->first();
+        $works = explode(';', $master->work);
+        $inquiries = Inquiry::whereNull('master_id')->get();
+        foreach ($inquiries as $inquiry) {
+            $type = $inquiry->getInquiryDetail()->getWork()->work;
+        }
+    }
 }

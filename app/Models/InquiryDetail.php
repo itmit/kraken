@@ -20,6 +20,6 @@ class InquiryDetail extends Model
 
     public function getWork()
     {
-        return $this->hasOne(TypeOfWork::class, 'work', 'id')->first();
+        return $this->belongsTo(TypeOfWork::class, 'work')->first();
     }
 }

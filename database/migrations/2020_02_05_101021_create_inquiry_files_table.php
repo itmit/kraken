@@ -18,6 +18,7 @@ class CreateInquiryFilesTable extends Migration
             $table->bigInteger('inquiry_id')->unsigned();
             $table->string('file');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

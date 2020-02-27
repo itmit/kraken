@@ -38,6 +38,7 @@ class InquiryApiController extends ApiBaseController
             ],
             'description' => 'required|min:2|max:191',
             'address' => 'required|string|min:2|max:191',
+            'files' => 'array'
         ]);
         
         if ($validator->fails()) { 
@@ -61,6 +62,15 @@ class InquiryApiController extends ApiBaseController
                     'address' => $request->address,
                     'status' => 'created',
                 ]);
+
+                foreach ($request->files as $file) {
+                    $path = $file->store('public/inquiry/'.$inquiry->uuid);
+                    $url = Storage::url($path);
+                    InquiryFile::create([
+                        'inquiry_id' => $inquiry->id,
+                        'file' => $url,
+                    ]);
+                }
             });
         } catch (\Throwable $th) {
             return response()->json(['error'=>'Произошла ошибка'], 500);  

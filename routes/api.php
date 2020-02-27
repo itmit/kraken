@@ -20,7 +20,10 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('getTypeOfWork', 'Api\InquiryApiController@getTypeOfWork');
 
-    Route::post('inquiry/store', 'Api\InquiryApiController@store');
+    // Route::post('inquiry/store', 'Api\InquiryApiController@store');
+    Route::resource('inquiry', 'Api\InquiryApiController');
+
+    Route::get('masters/getInquiryList', 'Api\MasterApiController@getInquiryList');
 
     Route::post('masters/changeStatus', 'Api\MasterApiController@changeStatus');
     Route::post('masters/updateLocation', 'Api\MasterApiController@updateLocation');
