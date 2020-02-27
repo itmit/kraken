@@ -106,4 +106,34 @@ class InquiryApiController extends ApiBaseController
         return $this->sendResponse($list,
             'Список родов работ');
     }
+
+    public function getMasterList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [ 
+            'uuid' => 'required|exists:inquiries',
+        ]);
+        
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        $inquiry = Inquiry::where('uuid', $request->uuid)->first();
+        $type = $inquiry->getInquiryDetail()->getWork()->work;
+
+        $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
+        ->where('master_infos.status', 'free')
+        ->select('clients.uuid', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating')
+        ->get();
+
+        $result = [];
+
+        foreach ($masters as $master) {
+            $works = explode(';', $master->work);
+            foreach ($works as $work) {
+                if($work == $type) $result[] = $master;
+            }
+        };
+
+        return $this->sendResponse($result, 'Список подходящих мастеров');
+    }
 }

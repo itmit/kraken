@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     // Route::post('inquiry/store', 'Api\InquiryApiController@store');
     Route::resource('inquiry', 'Api\InquiryApiController');
 
+    Route::post('inquiry/masters', 'Api\InquiryApiController@getMasterList');
+
     Route::get('masters/getInquiryList', 'Api\MasterApiController@getInquiryList');
 
     Route::post('masters/changeStatus', 'Api\MasterApiController@changeStatus');
