@@ -166,7 +166,7 @@ class AuthApiController extends ApiBaseController
         }
         else
         {
-            return response()->json(['error'=>'Неверный пароль'], 500); 
+            return response()->json(['error'=>'Неверный пароль'], 400); 
         }
         return response()->json(['error'=>'Авторизация не удалась'], 401); 
     }

@@ -83,8 +83,13 @@ class MasterApiController extends ApiBaseController
         $master = MasterInfo::where('master_id', auth('api')->user()->id)->first();
         $works = explode(';', $master->work);
         $inquiries = Inquiry::whereNull('master_id')->get();
+        $result = [];
         foreach ($inquiries as $inquiry) {
             $type = $inquiry->getInquiryDetail()->getWork()->work;
+            foreach ($works as $work) {
+                if($work == $type) $result[] = $inquiry;
+            }
         }
+        return $this->sendResponse($inquiries, 'Список подходящих запросов');
     }
 }
