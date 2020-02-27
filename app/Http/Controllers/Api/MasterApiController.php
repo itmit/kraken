@@ -90,6 +90,6 @@ class MasterApiController extends ApiBaseController
                 if($work == $type) $result[] = $inquiry;
             }
         }
-        return $this->sendResponse($inquiries, 'Список подходящих запросов');
+        return $this->sendResponse([$inquiries], 'Список подходящих запросов');
     }
 }
