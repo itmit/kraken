@@ -9,6 +9,7 @@ use App\Models\Inquiry;
 use App\Models\InquiryDetail;
 use App\Models\InquiryFile;
 use App\Models\TypeOfWork;
+use App\Models\MasterToInquiry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -135,5 +136,27 @@ class InquiryApiController extends ApiBaseController
         };
 
         return $this->sendResponse($result, 'Список подходящих мастеров');
+    }
+
+    public function selectMaster(Request $request)
+    {
+        $validator = Validator::make($request->all(), [ 
+            'uuid_inquiry' => 'required|exists:inquiries,uuid',
+            'uuid_master' => 'required|exists:clients,uuid',
+        ]);
+        
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        $inquiry = Inquiry::where('uuid', $request->uuid_inquiry)->first();
+        $master = Client::where('uuid', $request->uuid_master)->first();
+
+        MasterToInquiry::create([
+            'inquiry_id' => $inquiry->id,
+            'master_id' => $master->id
+        ]);
+
+        return $this->sendResponse([], 'Запрос отправлен мастеру');
     }
 }
