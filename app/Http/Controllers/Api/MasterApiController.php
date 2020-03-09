@@ -9,6 +9,7 @@ use App\Models\Inquiry;
 use App\Models\InquiryDetail;
 use App\Models\InquiryFile;
 use App\Models\TypeOfWork;
+use App\Models\MasterToInquiry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
