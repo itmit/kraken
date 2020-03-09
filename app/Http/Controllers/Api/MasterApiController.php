@@ -92,4 +92,19 @@ class MasterApiController extends ApiBaseController
         }
         return $this->sendResponse($result, 'Список подходящих запросов');
     }
+
+    public function getInquiryToMasterList()
+    {
+        return $this->sendResponse(MasterToInquiry::join('inquiries', 'master_to_inquiries.inquiry_id', '=', 'inquiries.id')
+        ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
+        ->select('inquiries.uuid', 'inquiries.client_id', 'inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address')
+        ->where('master_to_inquiries.master_id', auth('api')->user()->id)
+        ->get()
+        ->toArray(), 'Список запросов');
+    }
+
+    public function applyInquiry()
+    {
+
+    }
 }

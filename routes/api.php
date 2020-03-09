@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('inquiry/masters', 'Api\InquiryApiController@getMasterList');
     Route::post('inquiry/selectMaster', 'Api\InquiryApiController@selectMaster');
 
-
+    Route::get('masters/getInquiryToMasterList', 'Api\MasterApiController@getInquiryToMasterList');
     Route::get('masters/getInquiryList', 'Api\MasterApiController@getInquiryList');
 
     Route::post('masters/changeStatus', 'Api\MasterApiController@changeStatus');
