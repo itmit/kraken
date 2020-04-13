@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->enum('type', ['customer', 'master']); // заказчик, мастер
             $table->string('password');
+            $table->text('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

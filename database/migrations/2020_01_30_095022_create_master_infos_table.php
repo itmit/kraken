@@ -25,7 +25,6 @@ class CreateMasterInfosTable extends Migration
             $table->enum('status', ['free', 'busy', 'offline'])->default('offline');
             $table->float('latitude')->nullable(); // широта
             $table->float('longitude')->nullable(); // долгота
-            $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -73,10 +73,10 @@ class AuthApiController extends ApiBaseController
                 'phone' => $request->phone,
             ]);
 
-            if($request->device_token)
+            if($request->deviceToken)
             {
-                ClientInfo::where('client_id', '=', $this->user->id)->update([
-                    'device_token' => $this->device_token
+                Client::where('id', '=', $this->user->id)->update([
+                    'device_token' => $this->deviceToken
                 ]);
             };
 
@@ -149,7 +149,9 @@ class AuthApiController extends ApiBaseController
                 
                 if($request->deviceToken)
                 {
-                    self::updateDeviceToken($client, $request->deviceToken);
+                    Client::where('id', '=', $client->id)->update([
+                        'device_token' => $request->deviceToken
+                    ]);
                 }
 
                 return $this->sendResponse([
@@ -171,20 +173,19 @@ class AuthApiController extends ApiBaseController
         return response()->json(['error'=>'Авторизация не удалась'], 401); 
     }
 
-    private function updateDeviceToken($client, $deviceToken)
+    private function updateDeviceToken(Request $request)
     {
-        if($client->type == 'customer')
-        {
-            ClientInfo::where('client_id', '=', $client->id)->update([
-                'device_token' => $deviceToken
-            ]);
+        $validator = Validator::make($request->all(), [ 
+            'deviceToken' => 'required',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
         }
-        if($client->type == 'master')
-        {
-            MasterInfo::where('master_id', '=', $client->id)->update([
-                'device_token' => $deviceToken
-            ]);
-        }
+
+        Client::where('id', '=', auth('api')->user()->id)->update([
+            'device_token' => $request->deviceToken
+        ]);
     }
     
 }

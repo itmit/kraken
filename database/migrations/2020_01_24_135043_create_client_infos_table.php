@@ -20,7 +20,6 @@ class CreateClientInfosTable extends Migration
             $table->string('organization');
             $table->text('address');
             $table->string('phone');
-            $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

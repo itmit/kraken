@@ -18,6 +18,7 @@ class CreateInquiriesTable extends Migration
             $table->uuid('uuid');
             $table->bigInteger('client_id')->unsigned();
             $table->bigInteger('master_id')->unsigned()->nullable();
+            $table->boolean('is_finished')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

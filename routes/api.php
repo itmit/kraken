@@ -31,5 +31,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::post('masters/changeStatus', 'Api\MasterApiController@changeStatus');
     Route::post('masters/updateLocation', 'Api\MasterApiController@updateLocation');
+    Route::post('masters/applyInquiry', 'Api\MasterApiController@applyInquiry');
+    Route::post('masters/finishInquiry', 'Api\MasterApiController@finishInquiry');
+
+    Route::post('updateDeviceToken', 'Api\AuthApiController@updateDeviceToken');
 
 });

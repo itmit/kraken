@@ -106,6 +106,35 @@ class MasterApiController extends ApiBaseController
 
     public function applyInquiry()
     {
+        $validator = Validator::make($request->all(), [ 
+            'uuid' => 'required|uuid|exists:inquiries',
+        ]);
 
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        Inquiry::where('uuid', $request->uuid)->update([
+            'master_id' => auth('api')->user()->id
+        ]);
+
+        return $this->sendResponse([], 'Заявка принята мастером');
+    }
+
+    public function finishInquiry()
+    {
+        $validator = Validator::make($request->all(), [ 
+            'uuid' => 'required|uuid|exists:inquiries',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        Inquiry::where('uuid', $request->uuid)->update([
+            'is_finished' => 1
+        ]);
+
+        return $this->sendResponse([], 'Заявка завершена');
     }
 }
