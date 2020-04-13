@@ -34,7 +34,7 @@ class ClientApiController extends ApiBaseController
         {
             $client = Client::where('id', $id)
             ->join('master_infos', 'clients.id', '=', 'master_infos.master_id')
-            ->select('clients.email', 'master_infos.department_id', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.status')
+            ->select('clients.id', 'clients.email', 'master_infos.department_id', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.status')
             ->first()
             ->toArray();
         }
@@ -42,7 +42,7 @@ class ClientApiController extends ApiBaseController
         {
             $client = Client::where('id', $id)
             ->join('client_infos', 'clients.id', '=', 'client_infos.client_id')
-            ->select('clients.email', 'client_infos.name', 'client_infos.organization', 'client_infos.address', 'client_infos.phone')
+            ->select('clients.id', 'clients.email', 'client_infos.name', 'client_infos.organization', 'client_infos.address', 'client_infos.phone')
             ->first()
             ->toArray();
         }
