@@ -50,6 +50,6 @@ class ClientApiController extends ApiBaseController
         }
 
         return $this->sendResponse($client,
-            'Координаты успешно обновлены');
+            '');
     }
 }

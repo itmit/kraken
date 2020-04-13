@@ -29,6 +29,16 @@ class InquiryApiController extends ApiBaseController
     private $user;
     private $userInfo;
 
+    public function show($uuid)
+    {
+        $inquiry = Inquiry::where('uuid', $uuid)
+        ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
+        ->select('inquiry_details.work')
+        ->first()
+        ->toArray();
+        return $this->sendResponse($inquiry, 'Запрос');
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
