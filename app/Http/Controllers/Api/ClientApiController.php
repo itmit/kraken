@@ -37,7 +37,7 @@ class ClientApiController extends ApiBaseController
             // ->select('clients.id', 'clients.email', 'master_infos.department_id', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.status')
             // ->first()
             // ->toArray();
-            $client = $clientType->getMasterInfo();
+            $client = $clientType->getMasterInfo()->toArray();
         }
         if($clientType->type == 'customer')
         {
@@ -46,7 +46,7 @@ class ClientApiController extends ApiBaseController
             // ->select('clients.id', 'clients.email', 'client_infos.name', 'client_infos.organization', 'client_infos.address', 'client_infos.phone')
             // ->first()
             // ->toArray();
-            $client = $clientType->getClientInfo();
+            $client = $clientType->getClientInfo()->toArray();
         }
 
         return $this->sendResponse($client,
