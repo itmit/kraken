@@ -29,22 +29,24 @@ class ClientApiController extends ApiBaseController
     public function index()
     {
         $id = auth('api')->user()->id;
-        $clientType = Client::where('id', $id)->first()->type;
-        if($clientType == 'master')
+        $clientType = Client::where('id', $id)->first();
+        if($clientType->type == 'master')
         {
-            $client = Client::where('id', $id)
-            ->join('master_infos', 'clients.id', '=', 'master_infos.master_id')
-            ->select('clients.id', 'clients.email', 'master_infos.department_id', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.status')
-            ->first()
-            ->toArray();
+            // $client = Client::where('id', $id)
+            // ->join('master_infos', 'clients.id', '=', 'master_infos.master_id')
+            // ->select('clients.id', 'clients.email', 'master_infos.department_id', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.status')
+            // ->first()
+            // ->toArray();
+            $client = $clientType->getMasterInfo();
         }
-        if($clientType == 'customer')
+        if($clientType->type == 'customer')
         {
-            $client = Client::where('id', $id)
-            ->join('client_infos', 'clients.id', '=', 'client_infos.client_id')
-            ->select('clients.id', 'clients.email', 'client_infos.name', 'client_infos.organization', 'client_infos.address', 'client_infos.phone')
-            ->first()
-            ->toArray();
+            // $client = Client::where('id', $id)
+            // ->join('client_infos', 'clients.id', '=', 'client_infos.client_id')
+            // ->select('clients.id', 'clients.email', 'client_infos.name', 'client_infos.organization', 'client_infos.address', 'client_infos.phone')
+            // ->first()
+            // ->toArray();
+            $client = $clientType->getClientInfo();
         }
 
         return $this->sendResponse($client,
