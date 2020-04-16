@@ -33,7 +33,7 @@ class InquiryApiController extends ApiBaseController
     {
         $inquiry = Inquiry::where('uuid', $uuid)
         ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
-        ->select('inquiry_details.work')
+        ->select('inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.status', 'inquiry_details.started_at')
         ->first()
         ->toArray();
         return $this->sendResponse($inquiry, 'Запрос');
@@ -168,5 +168,10 @@ class InquiryApiController extends ApiBaseController
         ]);
 
         return $this->sendResponse([], 'Запрос отправлен мастеру');
+    }
+
+    public function index()
+    {
+        return $this->sendResponse(Inquiry::where('client_id', auth('api')->user()->id)->get()->toArray(), 'Список запросов клиента');
     }
 }
