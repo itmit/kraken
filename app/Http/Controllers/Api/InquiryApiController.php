@@ -172,6 +172,8 @@ class InquiryApiController extends ApiBaseController
 
     public function index()
     {
-        return $this->sendResponse(Inquiry::where('client_id', auth('api')->user()->id)->where('is_finished', 0)->get()->toArray(), 'Список запросов клиента');
+        return $this->sendResponse(Inquiry::where('client_id', auth('api')->user()->id)->where('is_finished', 0)
+        ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
+        ->get()->toArray(), 'Список запросов клиента');
     }
 }
