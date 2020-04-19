@@ -90,7 +90,8 @@ class InquiryApiController extends ApiBaseController
 
         if($request->urgency == 'urgent')
         {
-            PushController::test();
+            $test = new PushController();
+            $test->test();
         }
 
         return $this->sendResponse([],
