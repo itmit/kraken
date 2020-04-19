@@ -99,7 +99,7 @@ class InquiryApiController extends ApiBaseController
             foreach($masters as $master)
             {
                 $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
-                $request->request->add(['uuid_master' => $master->uuid]);
+                $request->request->add(['uuid_master' => $master['uuid']]);
                 self::selectMaster($request);
                 $test->test();
             }
