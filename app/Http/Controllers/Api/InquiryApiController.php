@@ -96,7 +96,7 @@ class InquiryApiController extends ApiBaseController
             $test = new PushController();
             $request->request->add(['uuid' => $this->inquiry->uuid]);
             $masters = self::getMasterList($request);
-            foreach($masters->data as $master)
+            foreach($masters->getData() as $master)
             {
                 $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
                 $request->request->add(['uuid_master' => $master->uuid]);
