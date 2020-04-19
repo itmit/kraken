@@ -98,7 +98,7 @@ class InquiryApiController extends ApiBaseController
             $masters = self::getMasterList($request);
             foreach($masters as $master)
             {
-                return $this->sendResponse($master,
+                return $this->sendResponse($master->toArray(),
             'Запрос успешно создан');
                 $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
                 $request->request->add(['uuid_master' => $master->uuid]);
