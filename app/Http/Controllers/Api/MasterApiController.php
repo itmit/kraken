@@ -134,11 +134,12 @@ class MasterApiController extends ApiBaseController
         Inquiry::where('uuid', $request->uuid)->update([
             'is_finished' => 1
         ]);
-
-        $rating = MasterInfo::where('master_id', auth('api')->user()->id)->first(['rating']);
+        $id = auth('api')->user()->id;
+        $rating = MasterInfo::where('master_id', $id)->first(['rating']);
         $newRating = $rating->rating + 1;
-        MasterInfo::where('master_id', auth('api')->user()->id)->update([
-            'rating' => $newRating
+        MasterInfo::where('master_id', $id)->update([
+            'rating' => $newRating,
+            'status' => 'free',
         ]);
 
         return $this->sendResponse([], 'Заявка завершена');
