@@ -29,6 +29,7 @@ class InquiryApiController extends ApiBaseController
 
     private $user;
     private $userInfo;
+    private $inquiry;
 
     public function show($uuid)
     {
@@ -65,6 +66,8 @@ class InquiryApiController extends ApiBaseController
                     'uuid' => Str::uuid(),
                     'client_id' => $authClientId,
                 ]);
+
+                $this->inquiry = $inquiry;
         
                 InquiryDetail::create([
                     'inquiry_id' => $inquiry->id,
@@ -90,7 +93,7 @@ class InquiryApiController extends ApiBaseController
 
         if($request->urgency == 'urgent')
         {
-            return $masters = self::getMasterList($inquiry->uuid);
+            return $masters = self::getMasterList($this->inquiry->uuid);
             $test = new PushController();
             $test->test();
         }
