@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-class PushController extends BaseApiController
+class PushController extends ApiBaseController
 {
 
     public function test()
