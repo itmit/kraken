@@ -27,7 +27,7 @@
                     $masterInfo = $item->getMasterInfo();
                 ?>
                     <tr>
-                        <td><a href="{{ $masterInfo->id }}">{{ $masterInfo->name }}</a></td>
+                        <td><a href="masters/{{ $masterInfo->id }}">{{ $masterInfo->name }}</a></td>
                         <td>{{ $masterInfo->qualification }}</td>
                         <td>{{ $masterInfo->work }}</td>
                         <td>{{ $masterInfo->phone }}</td>
