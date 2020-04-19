@@ -18,7 +18,7 @@
                     <th scope="col">Рейтинг</th>
                     <th scope="col">Статус</th>
                     <th scope="col">Местоположение</th>
-                    <th scope="col">Зарегистрирован</th>
+                    <!-- <th scope="col">Зарегистрирован</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -27,7 +27,7 @@
                     $masterInfo = $item->getMasterInfo();
                 ?>
                     <tr>
-                        <td>{{ $masterInfo->name }}</td>
+                        <td><a href="{{ $masterInfo->id }}"></a>{{ $masterInfo->name }}</td>
                         <td>{{ $masterInfo->qualification }}</td>
                         <td>{{ $masterInfo->work }}</td>
                         <td>{{ $masterInfo->phone }}</td>
@@ -35,7 +35,7 @@
                         <td>{{ $masterInfo->rating }}</td>
                         <td>{{ $masterInfo->status }}</td>
                         <td>{{ $masterInfo->latitude }};{{ $masterInfo->longitude }}</td>
-                        <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td>
+                        <!-- <td>{{ date('H:i d.m.Y', strtotime($item->created_at->timezone('Europe/Moscow'))) }}</td> -->
                     </tr>
                 @endforeach
                 </tbody>

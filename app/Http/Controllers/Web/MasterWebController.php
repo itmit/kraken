@@ -122,7 +122,18 @@ class MasterWebController extends Controller
      */
     public function destroy(Request $request)
     {
-        Cases::where('id', '=', $request->id)->delete();
-        return response()->json(['succses'=>'Удалено'], 200); 
+        // Cases::where('id', '=', $request->id)->delete();
+        // return response()->json(['succses'=>'Удалено'], 200); 
+    }
+
+    /**
+     */
+    public function show(Request $request, $id)
+    {
+        $master = Client::where('id', $id)->first();
+        return view('masters.masterDetail', [
+            'master' => $master,
+            'info' => $master->getMasterInfo(),
+        ]); 
     }
 }
