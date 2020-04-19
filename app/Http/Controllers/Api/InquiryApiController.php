@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\PushController;
 
 class InquiryApiController extends ApiBaseController
 {
@@ -85,6 +86,11 @@ class InquiryApiController extends ApiBaseController
             });
         } catch (\Throwable $th) {
             return response()->json(['error'=>'Произошла ошибка'], 500);  
+        }
+
+        if($request->urgency == 'urgent')
+        {
+            PushController::test();
         }
 
         return $this->sendResponse([],
