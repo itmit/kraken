@@ -22,12 +22,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-class PushController extends ApiBaseController
+class PushController extends Controller
 {
 
     public function test()
     {
-        return $this->sendResponse([], 'TEST');
+        return response()->json(200);
     }
 
     public function sendPush(Request $request)
