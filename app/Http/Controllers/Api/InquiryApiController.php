@@ -93,10 +93,16 @@ class InquiryApiController extends ApiBaseController
 
         if($request->urgency == 'urgent')
         {
-            $request->request->add(['uuid' => $this->inquiry->uuid]);
-            return $masters = self::getMasterList($request);
             $test = new PushController();
-            $test->test();
+            $request->request->add(['uuid' => $this->inquiry->uuid]);
+            $masters = self::getMasterList($request);
+            foreach($masters as $master)
+            {
+                $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
+                $request->request->add(['uuid_master' => $master->uuid]);
+                self::selectMaster($request);
+                $test->test();
+            }
         }
 
         return $this->sendResponse([],

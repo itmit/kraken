@@ -135,6 +135,12 @@ class MasterApiController extends ApiBaseController
             'is_finished' => 1
         ]);
 
+        $rating = MasterInfo::where('master_id', auth('api')->user()->id)->first(['rating']);
+        $newRating = $rating->rating + 1;
+        MasterInfo::where('master_id', auth('api')->user()->id)->update([
+            'rating' => $newRating
+        ]);
+
         return $this->sendResponse([], 'Заявка завершена');
     }
 }
