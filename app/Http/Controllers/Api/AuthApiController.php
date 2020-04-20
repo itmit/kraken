@@ -76,7 +76,7 @@ class AuthApiController extends ApiBaseController
             if($request->deviceToken)
             {
                 Client::where('id', '=', $this->user->id)->update([
-                    'device_token' => $this->deviceToken
+                    'device_token' => $request->deviceToken
                 ]);
             };
 
