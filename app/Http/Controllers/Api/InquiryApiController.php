@@ -199,4 +199,26 @@ class InquiryApiController extends ApiBaseController
         ->join('type_of_works', 'inquiry_details.work', '=', 'type_of_works.id')
         ->get()->toArray(), 'Список запросов клиента');
     }
+
+    public function test()
+    {
+        $from = "Череповец Наседкина 12";
+        $to = "Череповец Шексинский 6";
+
+        $from = urlencode($from);
+        $to = urlencode($to);
+
+        $data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=ru-RU&sensor=false");
+
+        $data = json_decode($data);
+        return "Откуда: ".$data->destination_addresses[0] . "<br/>" .
+            "Куда: ". $data->origin_addresses[0] . "<br/>" .
+            "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
+            "Путь: ".$data->rows[0]->elements[0]->duration->text;
+     
+        // return $this->sendResponse(Inquiry::where('client_id', auth('api')->user()->id)->where('is_finished', 0)
+        // ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
+        // ->join('type_of_works', 'inquiry_details.work', '=', 'type_of_works.id')
+        // ->get()->toArray(), 'Список запросов клиента');
+    }
 }

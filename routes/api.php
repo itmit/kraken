@@ -39,3 +39,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('client', 'Api\ClientApiController@index');
 
 });
+
+Route::get('googletest', 'Api\InquiryApiController@test');
