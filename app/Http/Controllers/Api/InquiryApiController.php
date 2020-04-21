@@ -208,7 +208,7 @@ class InquiryApiController extends ApiBaseController
         $from = urlencode($from);
         $to = urlencode($to);
 
-        $data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=ru-RU&sensor=false&key=AIzaSyBhlqYCZYcDA-1T2vAn5LCwJq0JbMoWtMY");
+        $data = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=ru-RU&sensor=false&key=AIzaSyBhlqYCZYcDA-1T2vAn5LCwJq0JbMoWtMY");
 
         $data = json_decode($data);
         // return "Откуда: ".$data->destination_addresses[0] . "<br/>" .
