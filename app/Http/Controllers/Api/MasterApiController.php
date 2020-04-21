@@ -113,9 +113,12 @@ class MasterApiController extends ApiBaseController
         if ($validator->fails()) { 
             return response()->json(['errors'=>$validator->errors()], 400);            
         }
-
+        $id = auth('api')->user()->id;
         Inquiry::where('uuid', $request->uuid)->update([
-            'master_id' => auth('api')->user()->id
+            'master_id' => $id
+        ]);
+        MasterInfo::where('master_id', $id)->update([
+            'status' => 'busy',
         ]);
 
         return $this->sendResponse([], 'Заявка принята мастером');

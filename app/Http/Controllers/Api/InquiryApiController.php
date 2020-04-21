@@ -97,12 +97,15 @@ class InquiryApiController extends ApiBaseController
             $request->request->add(['uuid' => $this->inquiry->uuid]);
             $masters = self::getMasterList($request);
             $masters = $masters->getData();
+            $i = 0;
             foreach($masters->data as $master)
             {
                 $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
                 $request->request->add(['uuid_master' => $master->uuid]);
                 self::selectMaster($request);
-                $test->test();
+                $test->sendPush('Текст тела оповещения', 'Текст заголовка оповещения');
+                $i++;
+                if($i >= 10) break;
             }
         }
 
