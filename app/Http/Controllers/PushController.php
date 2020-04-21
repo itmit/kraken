@@ -30,12 +30,13 @@ class PushController extends Controller
         return response()->json(200);
     }
 
-    public function sendPush(string $body, string $title)
+    public function sendPush(string $body, string $title, string $token = null)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
 
+        if($token == null) return;
         $fields = array (
-            'to' => '/topics/all',
+            'to' => $token,
             "notification" => [
                 "body" => $body,
                 "title" => $title

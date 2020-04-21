@@ -103,7 +103,7 @@ class InquiryApiController extends ApiBaseController
                 $request->request->add(['uuid_inquiry' => $this->inquiry->uuid]);
                 $request->request->add(['uuid_master' => $master->uuid]);
                 self::selectMaster($request);
-                $test->sendPush('Текст тела оповещения', 'Текст заголовка оповещения');
+                $test->sendPush('Текст тела оповещения', 'Текст заголовка оповещения', $master->device_token);
                 $i++;
                 if($i >= 10) break;
             }
@@ -155,7 +155,7 @@ class InquiryApiController extends ApiBaseController
 
         $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
         ->where('master_infos.status', 'free')
-        ->select('clients.uuid', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating')
+        ->select('clients.uuid', 'clients.device_token', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating')
         ->get();
 
         $result = [];
