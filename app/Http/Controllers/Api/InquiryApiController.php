@@ -216,26 +216,33 @@ class InquiryApiController extends ApiBaseController
         // //     "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
         // //     "Путь: ".$data->rows[0]->elements[0]->duration->text;
      
-        $baseURL = "http://dev.virtualearth.net/REST/v1/Locations";
+        // URL of Bing Maps REST Services Routes API;   
+        $baseURL = "http://dev.virtualearth.net/REST/v1/Routes";  
+        
+        // Get the Bing Maps key from the user    
+        $key = 'AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1';  
+        
+        // construct parameter variables for Routes call  
+        $wayPoint0 = str_ireplace(" ","%20",'Москва');  
+        $wayPoint1 = str_ireplace(" ","%20",'Череповец');  
+        $optimize = "time";  
+        $routePathOutput = "Points";  
+        $distanceUnit = "km";  
+        $travelMode = "Driving";  
+        
+        // Construct final URL for call to Routes API  
+        $routesURL =     
+        $baseURL."/".$travelMode."?wp.0=".$wayPoint0."&wp.1=".$wayPoint1  
+        ."&optimize=".$optimize."&routePathOutput=".$routePathOutput  
+        ."&distanceUnit=".$distanceUnit."&output=xml&key=".$key;  
 
-        // Store the query in a PHP variable (assuming you obtained it from the form)  
-        $query = str_ireplace(" ","%20",'Россия, Вологодская область, Череповец, Наседкина 12');  
-        
-        // Construct the final Locations API URI  
-        $findURL = $baseURL."/".$query."?output=xml&key=AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1";  
-        
-        // get the response from the Locations API and store it in a string  
-        $output = file_get_contents($findURL);  
-        
-        // create an XML element based on the XML string  
+        $output = file_get_contents($routesURL);    
         $response = new SimpleXMLElement($output);  
-        
-        // Extract data (e.g. latitude and longitude) from the results  
-        $latitude =  
-        $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;  
-        $longitude =  
-        $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
+          
+        // Extract and print number of routes from response  
+        $numRoutes = $response->ResourceSets->ResourceSet->EstimatedTotal;  
+        // echo "Number of routes found: ".$numRoutes."<br>";
 
-        return $this->sendResponse([$latitude], 'Адрес');
+        return $this->sendResponse([$numRoutes], 'Адрес');
     }
 }
