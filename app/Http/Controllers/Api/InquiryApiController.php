@@ -216,30 +216,23 @@ class InquiryApiController extends ApiBaseController
         // //     "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
         // //     "Путь: ".$data->rows[0]->elements[0]->duration->text;
      
-        $baseURL = "http://dev.virtualearth.net/REST/v1/Locations";  
-  
-        // Create variables for search parameters (encode all spaces by specifying '%20' in the URI)  
-        $key = 'AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1';  
-        $country = "US";   
-        $addressLine = str_ireplace(" ","%20",'Наседкина 12');  
-        $adminDistrict = str_ireplace(" ","%20",'Вологодская область');  
-        $locality = str_ireplace(" ","%20",'Череповец');  
-        $postalCode = str_ireplace(" ","%20",'162600');  
-          
-        // Compose URI for Locations API request  
-        $findURL = $baseURL."/".$country."/".$adminDistrict."/".$postalCode."/".$locality."/".$addressLine."?output=xml&key=".$key;  
-
-                // get the response from the Locations API and store it in a string  
+        // Store the query in a PHP variable (assuming you obtained it from the form)  
+        $query = str_ireplace(" ","%20",'Россия, Вологодская область, Череповец, Наседкина 12');  
+        
+        // Construct the final Locations API URI  
+        $findURL = $baseURL."/".$query."?output=xml&key=AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1";  
+        
+        // get the response from the Locations API and store it in a string  
         $output = file_get_contents($findURL);  
         
-        // create an XML element based on the XML string    
+        // create an XML element based on the XML string  
         $response = new SimpleXMLElement($output);  
         
         // Extract data (e.g. latitude and longitude) from the results  
-        $latitude =   
+        $latitude =  
         $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;  
-        $longitude =   
-        $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;  
+        $longitude =  
+        $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;
 
         return $this->sendResponse([$latitude], 'Адрес');
     }
