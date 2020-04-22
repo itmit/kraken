@@ -203,7 +203,7 @@ class InquiryApiController extends ApiBaseController
     public function test()
     {
         $from = "Череповец Наседкина 12";
-        $to = "Череповец Шексинский 6";
+        $to = "59.091803, 37.925015";
 
         $from = urlencode($from);
         $to = urlencode($to);
