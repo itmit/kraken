@@ -219,12 +219,12 @@ class InquiryApiController extends ApiBaseController
         $baseURL = "http://dev.virtualearth.net/REST/v1/Locations";  
   
         // Create variables for search parameters (encode all spaces by specifying '%20' in the URI)  
-        $key = $_POST['key'];  
+        $key = 'AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1';  
         $country = "US";   
-        $addressLine = str_ireplace(" ","%20",$_POST['address']);  
-        $adminDistrict = str_ireplace(" ","%20",$_POST['state']);  
-        $locality = str_ireplace(" ","%20",$_POST['city']);  
-        $postalCode = str_ireplace(" ","%20",$_POST['zipcode']);  
+        $addressLine = str_ireplace(" ","%20",'Наседкина 12');  
+        $adminDistrict = str_ireplace(" ","%20",'Вологодская область');  
+        $locality = str_ireplace(" ","%20",'Череповец');  
+        $postalCode = str_ireplace(" ","%20",'162600');  
           
         // Compose URI for Locations API request  
         $findURL = $baseURL."/".$country."/".$adminDistrict."/".$postalCode."/".$locality."/".$addressLine."?output=xml&key=".$key;  
