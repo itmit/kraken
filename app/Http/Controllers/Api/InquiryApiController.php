@@ -202,20 +202,45 @@ class InquiryApiController extends ApiBaseController
 
     public function test()
     {
-        $from = "Череповец Наседкина 12";
-        $to = "59.091803, 37.925015";
+        // $from = "Череповец Наседкина 12";
+        // $to = "59.091803, 37.925015";
 
-        $from = urlencode($from);
-        $to = urlencode($to);
+        // $from = urlencode($from);
+        // $to = urlencode($to);
 
-        $data = file_get_contents("http://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=$from&destinations=$to&travelMode=driving&key=AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1");
+        // $data = file_get_contents("http://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins=$from&destinations=$to&travelMode=driving&key=AoQ1_RhiXbz8RQ36RbFTnPkRLu6yNFAfLaKKp-_kK6mrk_fm0yEA3pd-bEltlGl1");
 
-        $data = json_decode($data);
-        // return "Откуда: ".$data->destination_addresses[0] . "<br/>" .
-        //     "Куда: ". $data->origin_addresses[0] . "<br/>" .
-        //     "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
-        //     "Путь: ".$data->rows[0]->elements[0]->duration->text;
+        // $data = json_decode($data);
+        // // return "Откуда: ".$data->destination_addresses[0] . "<br/>" .
+        // //     "Куда: ". $data->origin_addresses[0] . "<br/>" .
+        // //     "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
+        // //     "Путь: ".$data->rows[0]->elements[0]->duration->text;
      
-        return $this->sendResponse([$data], 'Список запросов клиента');
+        $baseURL = "http://dev.virtualearth.net/REST/v1/Locations";  
+  
+        // Create variables for search parameters (encode all spaces by specifying '%20' in the URI)  
+        $key = $_POST['key'];  
+        $country = "US";   
+        $addressLine = str_ireplace(" ","%20",$_POST['address']);  
+        $adminDistrict = str_ireplace(" ","%20",$_POST['state']);  
+        $locality = str_ireplace(" ","%20",$_POST['city']);  
+        $postalCode = str_ireplace(" ","%20",$_POST['zipcode']);  
+          
+        // Compose URI for Locations API request  
+        $findURL = $baseURL."/".$country."/".$adminDistrict."/".$postalCode."/".$locality."/".$addressLine."?output=xml&key=".$key;  
+
+                // get the response from the Locations API and store it in a string  
+        $output = file_get_contents($findURL);  
+        
+        // create an XML element based on the XML string    
+        $response = new SimpleXMLElement($output);  
+        
+        // Extract data (e.g. latitude and longitude) from the results  
+        $latitude =   
+        $response->ResourceSets->ResourceSet->Resources->Location->Point->Latitude;  
+        $longitude =   
+        $response->ResourceSets->ResourceSet->Resources->Location->Point->Longitude;  
+
+        return $this->sendResponse([$latitude], 'Адрес');
     }
 }
