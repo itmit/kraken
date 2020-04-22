@@ -216,6 +216,8 @@ class InquiryApiController extends ApiBaseController
         // //     "Время: ". $data->rows[0]->elements[0]->distance->text . "<br/>" .
         // //     "Путь: ".$data->rows[0]->elements[0]->duration->text;
      
+        $baseURL = "http://dev.virtualearth.net/REST/v1/Locations";
+
         // Store the query in a PHP variable (assuming you obtained it from the form)  
         $query = str_ireplace(" ","%20",'Россия, Вологодская область, Череповец, Наседкина 12');  
         
