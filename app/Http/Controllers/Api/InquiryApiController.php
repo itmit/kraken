@@ -237,7 +237,7 @@ class InquiryApiController extends ApiBaseController
         ."&distanceUnit=".$distanceUnit."&output=xml&key=".$key;  
 
         $output = file_get_contents($routesURL);    
-        $response = new SimpleXMLElement($output);  
+        $response = new \SimpleXMLElement($output);  
           
         // Extract and print number of routes from response  
         $numRoutes = $response->ResourceSets->ResourceSet->EstimatedTotal;  
