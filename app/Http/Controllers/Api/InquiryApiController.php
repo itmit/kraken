@@ -243,6 +243,6 @@ class InquiryApiController extends ApiBaseController
         $numRoutes = $response->ResourceSets->ResourceSet->EstimatedTotal;  
         // echo "Number of routes found: ".$numRoutes."<br>";
 
-        return $this->sendResponse([$numRoutes], 'Адрес');
+        return $this->sendResponse([$response], 'Адрес');
     }
 }
