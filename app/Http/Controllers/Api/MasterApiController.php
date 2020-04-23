@@ -160,5 +160,11 @@ class MasterApiController extends ApiBaseController
         if ($validator->fails()) { 
             return response()->json(['errors'=>$validator->errors()], 400);            
         }
+
+        MasterInfo::where('master_id', auth('api')->user()->id)->update([
+            'way' => $request->way,
+        ]);
+
+        return $this->sendResponse([], 'Способ перемещения изменен');
     }
 }

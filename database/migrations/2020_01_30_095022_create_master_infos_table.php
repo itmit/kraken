@@ -23,8 +23,8 @@ class CreateMasterInfosTable extends Migration
             $table->string('phone');
             $table->integer('rating')->default(0);
             $table->enum('status', ['free', 'busy', 'offline'])->default('offline');
-            $table->float('latitude')->nullable(); // широта
-            $table->float('longitude')->nullable(); // долгота
+            $table->float('latitude', 8, 6)->nullable(); // широта
+            $table->float('longitude', 8, 6)->nullable(); // долгота
             $table->timestamps();
             $table->softDeletes();
 

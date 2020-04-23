@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\PushController;
+use App\Http\Controllers\DistanceController;
 
 class InquiryApiController extends ApiBaseController
 {
@@ -155,7 +156,9 @@ class InquiryApiController extends ApiBaseController
 
         $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
         ->where('master_infos.status', 'free')
-        ->select('clients.uuid', 'clients.device_token', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating')
+        ->where('master_infos.latitude', '<>', null)
+        ->where('master_infos.longitude', '<>', null)
+        ->select('clients.uuid', 'clients.device_token', 'master_infos.name', 'master_infos.qualification', 'master_infos.work', 'master_infos.phone', 'master_infos.rating', 'master_infos.latitude', 'master_infos.longitude', 'master_infos.way')
         ->get();
 
         $result = [];
@@ -163,7 +166,14 @@ class InquiryApiController extends ApiBaseController
         foreach ($masters as $master) {
             $works = explode(';', $master->work);
             foreach ($works as $work) {
-                if($work == $type) $result[] = $master;
+                if($work == $type)
+                {
+                    $time = new DistanceController();
+                    if($test->getTime($inquiry->getInquiryDetail()->address, $item->latitude . ', ' . $item->longitude, $item->way))
+                    {
+                        $result[] = $master;
+                    }
+                } 
             }
         };
 
