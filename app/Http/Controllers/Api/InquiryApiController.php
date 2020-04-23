@@ -240,9 +240,9 @@ class InquiryApiController extends ApiBaseController
         $response = new \SimpleXMLElement($output);  
           
         // Extract and print number of routes from response  
-        $res = $response->ResourceSets->ResourceSet->Resources->TravelDurationTraffic;  
+        $numRoutes = $response->ResourceSets->ResourceSet->EstimatedTotal;  
         // echo "Number of routes found: ".$numRoutes."<br>";
 
-        return $this->sendResponse([$res], 'Адрес');
+        return $this->sendResponse([$numRoutes], 'Адрес');
     }
 }
