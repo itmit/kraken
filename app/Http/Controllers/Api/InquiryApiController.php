@@ -36,7 +36,7 @@ class InquiryApiController extends ApiBaseController
     {
         $inquiry = Inquiry::where('uuid', $uuid)
         ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
-        ->select('inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.status', 'inquiry_details.started_at')
+        ->select('inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.status', 'inquiry_details.started_at', 'inquiry_details.created_at', 'inquiries.master_id')
         ->first()
         ->toArray();
         return $this->sendResponse($inquiry, 'Запрос');

@@ -98,7 +98,7 @@ class MasterApiController extends ApiBaseController
     {
         return $this->sendResponse(MasterToInquiry::join('inquiries', 'master_to_inquiries.inquiry_id', '=', 'inquiries.id')
         ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
-        ->select('inquiries.uuid', 'inquiries.client_id', 'inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address')
+        ->select('inquiries.uuid', 'inquiries.client_id', 'inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.created_at')
         ->where('master_to_inquiries.master_id', auth('api')->user()->id)
         ->get()
         ->toArray(), 'Список запросов');
@@ -140,6 +140,30 @@ class MasterApiController extends ApiBaseController
         $id = auth('api')->user()->id;
         $rating = MasterInfo::where('master_id', $id)->first(['rating']);
         $newRating = $rating->rating + 1;
+        MasterInfo::where('master_id', $id)->update([
+            'rating' => $newRating,
+            'status' => 'free',
+        ]);
+
+        return $this->sendResponse([], 'Заявка завершена');
+    }
+
+    public function cancelInquiry(Request $request)
+    {
+        $validator = Validator::make($request->all(), [ 
+            'uuid' => 'required|uuid|exists:inquiries',
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+
+        Inquiry::where('uuid', $request->uuid)->update([
+            'master_id' => null
+        ]);
+        $id = auth('api')->user()->id;
+        $rating = MasterInfo::where('master_id', $id)->first(['rating']);
+        $newRating = $rating->rating - 1;
         MasterInfo::where('master_id', $id)->update([
             'rating' => $newRating,
             'status' => 'free',
