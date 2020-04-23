@@ -24,7 +24,7 @@ use Illuminate\Validation\Rule;
 
 class DistanceController extends Controller
 {
-    public function getTime($from, $to, $mode, $time = 600)
+    public function getTime($from, $to, $mode, $time = 1200)
     {
         $baseURL = "http://dev.virtualearth.net/REST/v1/Routes";  
 
