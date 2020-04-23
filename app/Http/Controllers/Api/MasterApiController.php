@@ -104,7 +104,7 @@ class MasterApiController extends ApiBaseController
         ->toArray(), 'Список запросов');
     }
 
-    public function applyInquiry()
+    public function applyInquiry(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
             'uuid' => 'required|uuid|exists:inquiries',
@@ -124,7 +124,7 @@ class MasterApiController extends ApiBaseController
         return $this->sendResponse([], 'Заявка принята мастером');
     }
 
-    public function finishInquiry()
+    public function finishInquiry(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
             'uuid' => 'required|uuid|exists:inquiries',
@@ -146,5 +146,19 @@ class MasterApiController extends ApiBaseController
         ]);
 
         return $this->sendResponse([], 'Заявка завершена');
+    }
+
+    public function changeWayToTravel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [ 
+            'way' => [
+                'required',
+                Rule::in(['driving', 'walking']),
+            ],
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
     }
 }
