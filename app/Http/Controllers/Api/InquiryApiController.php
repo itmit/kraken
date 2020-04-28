@@ -79,8 +79,9 @@ class InquiryApiController extends ApiBaseController
                     'status' => 'created',
                 ]);
 
-                if ($request->hasFile('files')) {
-                    foreach ($request->file('files') as $file) {
+                if($request->files != NULL)
+                {
+                    foreach ($request->files as $file) {
                         $path = $file->store('public/inquiry/'.$inquiry->uuid);
                         $url = Storage::url($path);
                         InquiryFile::create([
