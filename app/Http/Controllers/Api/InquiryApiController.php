@@ -61,7 +61,7 @@ class InquiryApiController extends ApiBaseController
 
         $authClientId = auth('api')->user()->id;
 
-        return $request->files;
+        dd($request->files);
 
         try {
             DB::transaction(function () use ($request, $authClientId) {
