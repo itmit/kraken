@@ -63,7 +63,7 @@ class InquiryApiController extends ApiBaseController
 
         // dd($request->files);
 
-        try {
+        // try {
             DB::transaction(function () use ($request, $authClientId) {
                 $inquiry = Inquiry::create([
                     'uuid' => Str::uuid(),
@@ -90,9 +90,9 @@ class InquiryApiController extends ApiBaseController
                     ]);
                 }
             });
-        } catch (\Throwable $th) {
-            return response()->json(['error'=>'Произошла ошибка'], 500);  
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json(['error'=>'Произошла ошибка'], 500);  
+        // }
 
         if($request->urgency == 'urgent')
         {
