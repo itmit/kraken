@@ -81,6 +81,7 @@ class InquiryApiController extends ApiBaseController
 
                 foreach ($request->files as $file) {
                     $path = $file->store('public/inquiry/'.$inquiry->uuid);
+                    return $path;
                     $url = Storage::url($path);
                     InquiryFile::create([
                         'inquiry_id' => $inquiry->id,

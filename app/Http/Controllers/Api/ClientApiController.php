@@ -52,4 +52,34 @@ class ClientApiController extends ApiBaseController
         return $this->sendResponse($client,
             '');
     }
+
+    public function changeRadius()
+    {
+        $validator = Validator::make($request->all(), [ 
+            'radius' => [
+                'required',
+                Rule::in(['0', '1', '5', '10']),
+            ],
+        ]);
+        
+        if ($validator->fails()) { 
+            return response()->json(['errors'=>$validator->errors()], 400);            
+        }
+        $id = auth('api')->user()->id;
+        $client = Client::where('id', $id)->first();
+        if($client->type == 'master')
+        {
+            ClientInfo::where('client_id', $id)->update([
+                'radius' => $request->radius
+            ]);
+        }
+        if($client->type == 'customer')
+        {
+            MasterInfowhere('client_id', $id)->update([
+                'radius' => $request->radius
+            ]);
+        }
+        return $this->sendResponse([],
+            'Radius updated');
+    }
 }

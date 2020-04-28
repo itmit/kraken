@@ -25,6 +25,8 @@ class CreateMasterInfosTable extends Migration
             $table->enum('status', ['free', 'busy', 'offline'])->default('offline');
             $table->float('latitude', 8, 6)->nullable(); // широта
             $table->float('longitude', 8, 6)->nullable(); // долгота
+            $table->enum('way', ['driving', 'walking'])->default(0);
+            $table->enum('radius', ['0', '1', '5', '10'])->default('0');
             $table->timestamps();
             $table->softDeletes();
 

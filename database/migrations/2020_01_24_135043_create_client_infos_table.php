@@ -20,6 +20,7 @@ class CreateClientInfosTable extends Migration
             $table->string('organization');
             $table->text('address');
             $table->string('phone');
+            $table->enum('radius', ['0', '1', '5', '10'])->default('0');
             $table->timestamps();
             $table->softDeletes();
 

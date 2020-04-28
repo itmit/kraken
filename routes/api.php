@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updateDeviceToken', 'Api\AuthApiController@updateDeviceToken');
 
     Route::get('client', 'Api\ClientApiController@index');
+    Route::post('client/changeRadius', 'Api\ClientApiController@changeRadius');
 
 });
 
