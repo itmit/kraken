@@ -60,8 +60,6 @@ class InquiryApiController extends ApiBaseController
 
         $authClientId = auth('api')->user()->id;
 
-        dd($request);
-
         try {
             DB::transaction(function () use ($request, $authClientId) {
                 $inquiry = Inquiry::create([
