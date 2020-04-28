@@ -61,6 +61,8 @@ class InquiryApiController extends ApiBaseController
 
         $authClientId = auth('api')->user()->id;
 
+        return $request->files;
+
         try {
             DB::transaction(function () use ($request, $authClientId) {
                 $inquiry = Inquiry::create([
@@ -81,7 +83,6 @@ class InquiryApiController extends ApiBaseController
 
                 foreach ($request->files as $file) {
                     $path = $file->store('public/inquiry/'.$inquiry->uuid);
-                    return $path;
                     $url = Storage::url($path);
                     InquiryFile::create([
                         'inquiry_id' => $inquiry->id,
