@@ -52,7 +52,6 @@ class InquiryApiController extends ApiBaseController
             ],
             'description' => 'required|min:2|max:191',
             'address' => 'required|string|min:2|max:191',
-            'files' => 'array'
         ]);
         
         if ($validator->fails()) { 
@@ -79,9 +78,9 @@ class InquiryApiController extends ApiBaseController
                     'status' => 'created',
                 ]);
 
-                if($request->files != NULL)
+                if($request->docs != NULL)
                 {
-                    foreach ($request->files as $file) {
+                    foreach ($request->docs as $file) {
                         $path = $file->store('public/inquiry/'.$inquiry->uuid);
                         $url = Storage::url($path);
                         InquiryFile::create([
