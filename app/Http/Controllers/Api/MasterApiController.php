@@ -88,7 +88,14 @@ class MasterApiController extends ApiBaseController
         foreach ($inquiries as $inquiry) {
             $type = $inquiry->getInquiryDetail()->getWork()->work;
             foreach ($works as $work) {
-                if($work == $type) $result[] = $inquiry;
+                if($work == $type)
+                {
+                    $time = new DistanceController();
+                    if($time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $master->radius))
+                    {
+                        $result[] = $inquiry;
+                    }
+                }
             }
         }
         return $this->sendResponse($result, 'Список подходящих запросов');
