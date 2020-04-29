@@ -156,6 +156,8 @@ class InquiryApiController extends ApiBaseController
         $inquiry = Inquiry::where('uuid', $request->uuid)->first();
         $type = $inquiry->getInquiryDetail()->getWork()->work;
 
+        $radius = ClientInfo::where('id', auth('api')->user()->id)->first()->radius;
+
         $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
         ->where('master_infos.status', 'free')
         ->where('master_infos.latitude', '<>', null)
@@ -171,7 +173,7 @@ class InquiryApiController extends ApiBaseController
                 if($work == $type)
                 {
                     $time = new DistanceController();
-                    if($time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way))
+                    if($time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius))
                     {
                         $result[] = $master;
                     }
@@ -200,7 +202,8 @@ class InquiryApiController extends ApiBaseController
             'inquiry_id' => $inquiry->id,
             'master_id' => $master->id
         ]);
-
+        $test = new PushController();
+        $test->sendPush('Вам заявка', 'Вам заявка', $master->device_token);
         return $this->sendResponse([], 'Запрос отправлен мастеру');
     }
 

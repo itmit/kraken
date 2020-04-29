@@ -117,9 +117,13 @@ class MasterApiController extends ApiBaseController
         Inquiry::where('uuid', $request->uuid)->update([
             'master_id' => $id
         ]);
+        $i = Inquiry::where('uuid', $request->uuid)->first();
         MasterInfo::where('master_id', $id)->update([
             'status' => 'busy',
         ]);
+        $client = Client::where('id', $i->client_id)->first();
+        $test = new PushController();
+        $test->sendPush('Вам заявка', 'Вам заявка', $client->device_token);
 
         return $this->sendResponse([], 'Заявка принята мастером');
     }
