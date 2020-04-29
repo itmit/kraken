@@ -156,7 +156,7 @@ class InquiryApiController extends ApiBaseController
         $inquiry = Inquiry::where('uuid', $request->uuid)->first();
         $type = $inquiry->getInquiryDetail()->getWork()->work;
 
-        $radius = ClientInfo::where('id', auth('api')->user()->id)->first()->radius;
+        $radius = ClientInfo::where('client_id', auth('api')->user()->id)->first()->radius;
 
         $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
         ->where('master_infos.status', 'free')
