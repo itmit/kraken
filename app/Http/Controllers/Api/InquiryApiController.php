@@ -156,7 +156,7 @@ class InquiryApiController extends ApiBaseController
         $inquiry = Inquiry::where('uuid', $request->uuid)->first();
         $type = $inquiry->getInquiryDetail()->getWork()->work;
 
-        return $radius = ClientInfo::where('id', auth('api')->user()->id)->first()->name;
+        $radius = ClientInfo::where('id', auth('api')->user()->id)->first()->radius;
 
         $masters = Client::join('master_infos', 'clients.id', '=', 'master_infos.master_id')
         ->where('master_infos.status', 'free')
@@ -173,7 +173,6 @@ class InquiryApiController extends ApiBaseController
                 if($work == $type)
                 {
                     $time = new DistanceController();
-                    return $time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius);
                     if($time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius))
                     {
                         $result[] = $master;
