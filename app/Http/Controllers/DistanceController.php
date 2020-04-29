@@ -80,8 +80,8 @@ class DistanceController extends Controller
                 $output = file_get_contents($routesURL);    
                 $response = new \SimpleXMLElement($output);  
     
-                $TravelDurationTraffic = $response->ResourceSets->ResourceSet->Resources->Route->TravelDistance[0];  
-                if($TravelDurationTraffic <= $radius) $res = true;
+                $TravelDistance = $response->ResourceSets->ResourceSet->Resources->Route->TravelDistance[0];  
+                if($TravelDistance <= $radius) $res = true;
                 else $res = false;
     
                 return $res;

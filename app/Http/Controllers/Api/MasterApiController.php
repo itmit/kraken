@@ -57,7 +57,7 @@ class MasterApiController extends ApiBaseController
         $validator = Validator::make($request->all(), [ 
             'status' => [
                 'required',
-                Rule::in(['free', 'offline']), // свободен или оффлайн
+                Rule::in(['free', 'offline', 'busy']), // свободен или оффлайн
             ],
         ]);
         
@@ -180,7 +180,7 @@ class MasterApiController extends ApiBaseController
             'status' => 'free',
         ]);
 
-        return $this->sendResponse([], 'Заявка завершена');
+        return $this->sendResponse([], 'Заявка отменена');
     }
 
     public function changeWayToTravel(Request $request)
