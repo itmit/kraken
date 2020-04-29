@@ -24,7 +24,7 @@ use Illuminate\Validation\Rule;
 
 class DistanceController extends Controller
 {
-    public function getTime($from, $to, $mode, $time = 600, $radius = 0)
+    public function getTime($from, $to, $mode, $time = 600, $radius)
     {
         return $radius;
         if($radius == 0)
