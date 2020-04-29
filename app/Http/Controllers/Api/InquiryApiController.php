@@ -173,7 +173,7 @@ class InquiryApiController extends ApiBaseController
                 if($work == $type)
                 {
                     $time = new DistanceController();
-                    return $time->get($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius);
+                    return $time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius);
                     if($time->getTime($inquiry->getInquiryDetail()->address, $master->latitude . ', ' . $master->longitude, $master->way, 600, $radius))
                     {
                         $result[] = $master;
