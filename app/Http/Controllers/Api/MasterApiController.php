@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\PushController;
+use App\Http\Controllers\DistanceController;
 
 class MasterApiController extends ApiBaseController
 {
