@@ -75,7 +75,7 @@ class ClientApiController extends ApiBaseController
         }
         if($client->type == 'customer')
         {
-            MasterInfowhere('client_id', $id)->update([
+            MasterInfo::where('client_id', $id)->update([
                 'radius' => $request->radius
             ]);
         }
