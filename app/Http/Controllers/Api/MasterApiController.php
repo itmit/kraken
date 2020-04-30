@@ -87,7 +87,7 @@ class MasterApiController extends ApiBaseController
         $works = explode(';', $master->work);
         $inquiries = Inquiry::whereNull('master_id')
         ->join('inquiry_details', 'inquiries.id', '=', 'inquiry_details.inquiry_id')
-        ->select('inquiries.uuid', 'inquiries.client_id', 'inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.created_at')
+        // ->select('inquiries.uuid', 'inquiries.client_id', 'inquiry_details.work', 'inquiry_details.urgency', 'inquiry_details.description', 'inquiry_details.address', 'inquiry_details.created_at')
         ->get();
         $result = [];
         foreach ($inquiries as $inquiry) {
