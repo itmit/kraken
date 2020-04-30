@@ -53,7 +53,7 @@ class ClientApiController extends ApiBaseController
             '');
     }
 
-    public function changeRadius()
+    public function changeRadius(Request $request)
     {
         $validator = Validator::make($request->all(), [ 
             'radius' => [
