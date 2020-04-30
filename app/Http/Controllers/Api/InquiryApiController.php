@@ -260,6 +260,6 @@ class InquiryApiController extends ApiBaseController
         else $res = false;
         // echo "Number of routes found: ".$numRoutes."<br>";
 
-        return $this->sendResponse([$res], 'Адрес');
+        return $this->sendResponse([$response], 'Адрес');
     }
 }
