@@ -239,7 +239,7 @@ class InquiryApiController extends ApiBaseController
         
         // construct parameter variables for Routes call  
         $wayPoint0 = str_ireplace(" ","%20",'Санкт-Петербург, Восстания 2');  
-        $wayPoint1 = str_ireplace(" ","%20",'59.093020, 37.906097');  
+        $wayPoint1 = str_ireplace(" ","%20",'59.937658, 30.363517');  
         $optimize = "time";  
         $routePathOutput = "Points";  
         $distanceUnit = "km";  
